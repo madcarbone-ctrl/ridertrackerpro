@@ -909,15 +909,14 @@ function eseguiEliminazioneAnno() {
     }, 500);
 }
         // Inserisci questo in fondo al tag <script>
+// Assicurati che non ci siano errori sopra questa riga
 const versioneApp = "1.2";
-
-// Aggiorna il titolo della scheda
 document.title = "RIDER TRACKER PRO V" + versioneApp;
 
-// Aggiorna l'header h1 (anche senza ID)
-const headerPrincipale = document.querySelector('h1');
-if (headerPrincipale) {
-    headerPrincipale.innerText = "RIDER TRACKER PRO V" + versioneApp;
+// Questo comando forza il cambio del testo nel primo h1 che trova
+const headerTitolo = document.getElementsByTagName('h1')[0];
+if (headerTitolo) {
+    headerTitolo.innerHTML = "RIDER TRACKER PRO V" + versioneApp;
 }
 </script>
 </body>
