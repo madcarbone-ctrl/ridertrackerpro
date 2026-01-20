@@ -709,12 +709,17 @@ function eseguiEliminazioneMese() {
         
     }
 }
-    window.onload = function() { 
-    // Impedisce la selezione di date future nel calendario
-const oggi = new Date().toISOString().split('T')[0];
-document.getElementById('data').setAttribute('max', oggi);
-    calcola(); startClock(); checkFineMese(); gestisciTastiera(); if('serviceWorker' in navigator){ navigator.serviceWorker.register('service-worker.js'); } };
-    
+
+window.onload = function() { 
+    calcola(); 
+    startClock(); 
+    checkFineMese(); 
+    gestisciTastiera(); 
+    if('serviceWorker' in navigator){ 
+        navigator.serviceWorker.register('service-worker.js'); 
+    } 
+};
+        
 let chartOraInstance = null;
 let chartKmInstance = null;
 
