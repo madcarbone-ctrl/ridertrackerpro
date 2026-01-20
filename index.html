@@ -908,6 +908,17 @@ function eseguiEliminazioneAnno() {
         modal.querySelector('p').innerText = "Sei sicuro di voler eliminare questo elemento dallo storico?";
     }, 500);
 }
+        // Inserisci questo in fondo al tag <script>
+const versioneApp = "1.2";
+
+// Aggiorna il titolo della scheda
+document.title = "RIDER TRACKER PRO V" + versioneApp;
+
+// Aggiorna l'header h1 (anche senza ID)
+const headerPrincipale = document.querySelector('h1');
+if (headerPrincipale) {
+    headerPrincipale.innerText = "RIDER TRACKER PRO V" + versioneApp;
+}
 </script>
 </body>
 </html>
