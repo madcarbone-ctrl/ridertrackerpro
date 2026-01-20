@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>RIDER TRACKER PRO V1.1</title>
+    <title>RIDER TRACKER PRO V1.2</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -176,7 +176,7 @@
 </head>
 <body>
     <div id="mainContainer">
-        <div class="app-title no-print" onclick="document.getElementById('modalFineMese').style.display = 'flex';">RIDER TRACKER PRO V1.1</div>
+        <div class="app-title no-print" onclick="document.getElementById('modalFineMese').style.display = 'flex';">RIDER TRACKER PRO V1.2</div>
         <div class="grid no-print">
             <div class="card main"><span class="label">LORDO</span><span class="val">€<span id="lordo">0.00</span></span></div>
             <div class="card main"><span class="label">NETTO</span><span class="val" id="netto">€0.00</span></div>
@@ -907,16 +907,6 @@ function eseguiEliminazioneAnno() {
         modal.querySelector('h3').innerText = "Conferma Eliminazione";
         modal.querySelector('p').innerText = "Sei sicuro di voler eliminare questo elemento dallo storico?";
     }, 500);
-}
-        // Inserisci questo in fondo al tag <script>
-// Assicurati che non ci siano errori sopra questa riga
-const versioneApp = "1.2";
-document.title = "RIDER TRACKER PRO V" + versioneApp;
-
-// Questo comando forza il cambio del testo nel primo h1 che trova
-const headerTitolo = document.getElementsByTagName('h1')[0];
-if (headerTitolo) {
-    headerTitolo.innerHTML = "RIDER TRACKER PRO V" + versioneApp;
 }
 </script>
 </body>
