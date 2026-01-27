@@ -17,15 +17,31 @@
         :root { --bg:#0f0f0f; --card:#1a1a1a; --primary:#00CCBC; --accent:#ff4d4d; --text:#e0e0e0; --dim:#888; --input-bg:#252525; --orange:#ffa500; --red-soft:#8b0000; }
         * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; touch-action: manipulation; }
    body { font-family:sans-serif; background: linear-gradient(180deg, rgba(22, 22, 22, 0.3) 0%, rgba(18, 18, 18, 0.5) 40%, rgba(15, 15, 15, 0.7) 70%, #0f0f0f 100%), linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px, linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px, linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px, linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px, linear-gradient(90deg, #1b1b1b 10px, transparent 10px), linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424); background-color: #131313; background-size: 100%, 20px 20px, 20px 20px, 20px 20px, 20px 20px, 20px 20px, 20px 20px; background-attachment: fixed; color:var(--text); margin:0; padding:10px; text-align:center; height:100vh; width:100vw; overflow:hidden; overscroll-behavior-y: none; }   
-        @media (display-mode: standalone) {
-            body { padding-top: calc(15px + env(safe-area-inset-top)) !important; }
-        }
-    @media (display-mode: standalone) {
+@media (display-mode: standalone) {
+
   body {
+    padding-top: calc(15px + env(safe-area-inset-top));
+    padding-bottom: env(safe-area-inset-bottom);
+
     height: auto !important;
-    min-height: 100vh;
-    overflow-y: auto;
+    min-height: 100dvh;
+    overflow-y: auto !important;
+
+    background-attachment: scroll !important;
   }
+
+  #mainContainer {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sticky-footer {
+    margin-top: auto;
+    margin-bottom: 0 !important;
+    padding-bottom: calc(15px + env(safe-area-inset-bottom));
+  }
+}
 
   #mainContainer {
     min-height: calc(100vh - env(safe-area-inset-bottom));
