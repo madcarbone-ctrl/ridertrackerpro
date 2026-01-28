@@ -28,16 +28,14 @@
         padding: 0 !important;
         height: 100dvh !important;
         display: flex !important;
-        /* Cambiato da center a flex-start per controllare meglio l'altezza dall'alto */
         align-items: flex-start !important; 
         justify-content: center !important;
     }
 
     #mainContainer {
-        /* Altezza ridotta leggermente per non toccare il fondo */
-        height: 92dvh !important; 
+        height: 92dvh !important;
+        max-height: 92dvh !important;
         width: 96vw !important;
-        /* Aumenta questo valore (es. 40px o 50px) se la vuoi ancora più bassa */
         margin-top: 35px !important; 
         margin-left: auto !important;
         margin-right: auto !important;
@@ -45,6 +43,7 @@
         display: flex;
         flex-direction: column;
         position: relative;
+        overflow-y: auto !important;
     }
 }
 
