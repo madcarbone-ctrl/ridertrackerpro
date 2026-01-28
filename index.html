@@ -28,33 +28,39 @@
         padding: 0 !important;
         height: 100dvh !important;
         display: flex !important;
-        /* Cambiato da center a flex-start per controllare meglio l'altezza dall'alto */
         align-items: flex-start !important; 
         justify-content: center !important;
     }
 
     #mainContainer {
-        height: 82dvh !important; /* Accorciato leggermente per aumentare i vuoti tra le caselle */
+        height: 84dvh !important; 
         width: 94vw !important;
-        margin: 55px auto 0 auto !important; /* 55px dall'alto per il notch, centrato ai lati */
+        margin: 60px auto 0 auto !important; 
         padding: 0 !important;
         display: flex !important;
         flex-direction: column !important;
-        /* DISTRIBUZIONE UNIFORME: Crea spazi identici tra le caselle */
-        justify-content: space-evenly !important; 
-        align-items: center !important;
+        /* Cambiato in space-between per usare tutto l'altezza disponibile */
+        justify-content: space-between !important; 
+        align-items: stretch !important;
     }
-    /* Rende tutte le caselle della PWA coerenti tra loro */
+
+    /* QUESTA È LA PARTE NUOVA CHE UNIFORMA TUTTO */
     #mainContainer > div, 
     #mainContainer > section, 
     #mainContainer > header {
-        margin: 0 !important;
+        flex: 1 !important; /* Forza ogni casella ad avere la stessa altezza */
+        margin: 6px 0 !important; /* Spazio fisso tra le caselle */
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important; /* Centra il testo dentro la casella */
         width: 100% !important;
+        min-height: 0 !important;
     }
 
     .card {
-        margin-bottom: 0 !important; /* Togliamo il margine basso che sulla web serve ma qui no */
-        padding: 12px 15px !important;
+        margin-bottom: 0 !important;
+        padding: 10px 15px !important;
+        height: 100% !important;
     }
 }
 
