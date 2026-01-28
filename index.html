@@ -34,14 +34,27 @@
     }
 
     #mainContainer {
-        /* Usa le safe-area per evitare che l'interfaccia finisca sotto la tacca o i tasti di sistema */
-        padding: env(safe-area-inset-top, 15px) 12px env(safe-area-inset-bottom, 15px) 12px !important;
-        margin: 0 auto !important;
-        height: 94dvh !important; /* dVH è l'altezza dinamica, perfetta per i browser mobile */
-        width: 95vw !important;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        height: 82dvh !important; /* Accorciato leggermente per aumentare i vuoti tra le caselle */
+        width: 94vw !important;
+        margin: 55px auto 0 auto !important; /* 55px dall'alto per il notch, centrato ai lati */
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        /* DISTRIBUZIONE UNIFORME: Crea spazi identici tra le caselle */
+        justify-content: space-evenly !important; 
+        align-items: center !important;
+    }
+    /* Rende tutte le caselle della PWA coerenti tra loro */
+    #mainContainer > div, 
+    #mainContainer > section, 
+    #mainContainer > header {
+        margin: 0 !important;
+        width: 100% !important;
+    }
+
+    .card {
+        margin-bottom: 0 !important; /* Togliamo il margine basso che sulla web serve ma qui no */
+        padding: 12px 15px !important;
     }
 }
 
