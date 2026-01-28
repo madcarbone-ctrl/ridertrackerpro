@@ -23,25 +23,27 @@
         body { font-family:sans-serif; background:var(--bg); color:var(--text); margin:0; padding:8px; text-align:center; height: 100vh; width: 100vw; overflow: hidden; position: relative; inset: 0; display: flex; align-items: flex-start; justify-content: flex start; }
 
         /* SOSTITUISCI COMPLETAMENTE I DUE @media CON QUESTO BLOCCO */
-
 @media (display-mode: standalone) {
     body {
         padding: 0 !important;
         height: 100dvh !important;
         display: flex !important;
-        align-items: center !important; /* Centra l'interfaccia verticalmente */
+        /* Cambiato da center a flex-start per controllare meglio l'altezza dall'alto */
+        align-items: flex-start !important; 
         justify-content: center !important;
     }
 
     #mainContainer {
-        /* Impostiamo l'altezza al 95% per creare una cornice uguale sopra e sotto */
-        height: 95dvh !important; 
+        /* Altezza ridotta leggermente per non toccare il fondo */
+        height: 92dvh !important; 
         width: 96vw !important;
-        margin: 0 !important; /* Rimosso il margine negativo che sbilanciava in alto */
+        /* Aumenta questo valore (es. 40px o 50px) se la vuoi ancora più bassa */
+        margin-top: 35px !important; 
+        margin-left: auto !important;
+        margin-right: auto !important;
         padding: 15px 10px !important;
         display: flex;
         flex-direction: column;
-        /* Assicura che la cornice sia centrata */
         position: relative;
     }
 }
