@@ -26,15 +26,23 @@
 
 @media (display-mode: standalone) {
     body {
-        padding-top: 0;
-        align-items: center !important;
+        padding: 0 !important;
+        height: 100dvh !important;
+        display: flex !important;
+        align-items: center !important; /* Centra l'interfaccia verticalmente */
         justify-content: center !important;
     }
 
     #mainContainer {
-        padding: 12px 10px 12px 10px !important;
-        margin-top: -12px !important;
-        margin-bottom: 0 !important;
+        /* Impostiamo l'altezza al 95% per creare una cornice uguale sopra e sotto */
+        height: 95dvh !important; 
+        width: 96vw !important;
+        margin: 0 !important; /* Rimosso il margine negativo che sbilanciava in alto */
+        padding: 15px 10px !important;
+        display: flex;
+        flex-direction: column;
+        /* Assicura che la cornice sia centrata */
+        position: relative;
     }
 }
 
