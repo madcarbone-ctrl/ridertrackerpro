@@ -34,17 +34,14 @@
     }
 
     #mainContainer {
-        /* Altezza ridotta leggermente per non toccare il fondo */
-        height: 92dvh !important; 
-        width: 96vw !important;
-        /* Aumenta questo valore (es. 40px o 50px) se la vuoi ancora più bassa */
-        margin-top: 35px !important; 
-        margin-left: auto !important;
-        margin-right: auto !important;
-        padding: 15px 10px !important;
+        /* Usa le safe-area per evitare che l'interfaccia finisca sotto la tacca o i tasti di sistema */
+        padding: env(safe-area-inset-top, 15px) 12px env(safe-area-inset-bottom, 15px) 12px !important;
+        margin: 0 auto !important;
+        height: 94dvh !important; /* dVH è l'altezza dinamica, perfetta per i browser mobile */
+        width: 95vw !important;
         display: flex;
         flex-direction: column;
-        position: relative;
+        justify-content: space-between;
     }
 }
 
