@@ -22,7 +22,10 @@
         * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; touch-action: manipulation; }
         body { font-family:sans-serif; background:var(--bg); color:var(--text); margin:0; padding:0; text-align:center; height: 100vh; width: 100vw; position: relative; inset: 0; display: flex; align-items: flex-start; justify-content: flex-start; }
 
-      @media (display-mode: standalone) {
+      @media (display-mode: standalone) { 
+          #mainContainer {
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)) !important;
+          }
     body {
         padding: 0 !important;
         height: 100dvh !important;
@@ -526,9 +529,6 @@
     <span style="flex: 1;">STAMPA</span>
             </button>
             <button class="btn-reset-soft" onclick="document.getElementById('modalConfirm').style.display='flex'">AZZERA DATABASE</button>
-            <button class="btn-reset-soft" style="margin-top: 10px; background: #ff0000;">
-    TEST SPAZIO EXTRA
-            </button>
         </div>
     </div>
     <script>
