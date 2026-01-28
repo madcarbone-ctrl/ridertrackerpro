@@ -31,38 +31,49 @@
         align-items: flex-start !important; 
         justify-content: center !important;
     }
+@media (display-mode: standalone) {
+    body {
+        padding: 0 !important;
+        height: 100dvh !important;
+        display: flex !important;
+        align-items: flex-start !important; 
+        justify-content: center !important;
+    }
 
     #mainContainer {
-        height: 84dvh !important; 
-        width: 94vw !important;
-        margin: 60px auto 0 auto !important; 
+        /* Usiamo quasi tutto lo schermo */
+        height: 95dvh !important; 
+        width: 92vw !important;
+        /* Spazio generoso per il notch */
+        margin: 65px auto 0 auto !important; 
         padding: 0 !important;
         display: flex !important;
         flex-direction: column !important;
-        /* Cambiato in space-between per usare tutto l'altezza disponibile */
+        /* Spinge il primo in alto e l'ultimo in basso, creando vuoto nel mezzo */
         justify-content: space-between !important; 
-        align-items: stretch !important;
+        align-items: center !important;
     }
 
-    /* QUESTA È LA PARTE NUOVA CHE UNIFORMA TUTTO */
-    #mainContainer > div, 
-    #mainContainer > section, 
-    #mainContainer > header {
-        flex: 1 !important; /* Forza ogni casella ad avere la stessa altezza */
-        margin: 6px 0 !important; /* Spazio fisso tra le caselle */
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important; /* Centra il testo dentro la casella */
+    /* Regola specifica per i 9 figli diretti */
+    #mainContainer > header,
+    #mainContainer > section,
+    #mainContainer > div {
+        /* Importante: togliamo flex: 1 che le rendeva troppo alte */
+        flex: 0 0 auto !important; 
+        /* Aumentiamo il margine verticale per staccarle visivamente */
+        margin: 10px 0 !important; 
         width: 100% !important;
-        min-height: 0 !important;
     }
 
     .card {
         margin-bottom: 0 !important;
-        padding: 10px 15px !important;
-        height: 100% !important;
+        /* Riduciamo il padding interno per rendere la casella più sottile */
+        padding: 8px 15px !important;
+        min-height: 45px !important;
     }
 }
+    
+        
 
 @media not all and (display-mode: standalone) {
     #mainContainer {
