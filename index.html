@@ -27,13 +27,15 @@
         padding: 0 !important;
         height: 100dvh !important;
         display: flex !important;
-        align-items: flex-start !important; 
+        align-items: flex-start !important;
         justify-content: center !important;
     }
 
     #mainContainer {
         height: calc(100dvh - env(safe-area-inset-bottom, 0px)) !important;
         max-height: calc(100dvh - env(safe-area-inset-bottom, 0px)) !important;
+        min-height: calc(100dvh - env(safe-area-inset-bottom, 0px)) !important;
+
         width: 96vw !important;
 
         margin-top: 15px !important;
@@ -49,7 +51,7 @@
         overflow-y: auto !important;
         overscroll-behavior: contain;
     }
-}
+      }
 
 @media not all and (display-mode: standalone) {
     #mainContainer {
