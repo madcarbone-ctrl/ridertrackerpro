@@ -1,4 +1,4 @@
-# 🚴 RIDER TRACKER PRO 1.1
+# 🚴 RIDER TRACKER PRO 1.1 (V1.3 aggiornata)
 **Controllo reale del guadagno per Rider professionisti**
 
 ---
