@@ -353,6 +353,33 @@
   z-index: 99999;
         }
         
+        html.pwa #pwaBorderAnim {
+  position: fixed;
+  inset: env(safe-area-inset-top)
+         env(safe-area-inset-right)
+         env(safe-area-inset-bottom)
+         env(safe-area-inset-left);
+  width: auto;
+  height: auto;
+  pointer-events: none;
+  z-index: 100000;
+}
+
+html.pwa #pwaBorderAnim rect {
+  fill: none;
+  stroke: #00CCBC;
+  stroke-width: 0.8;
+  stroke-linecap: round;
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: drawBorder 1.2s ease-out forwards;
+}
+
+@keyframes drawBorder {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
     </style>
     <script>
 (function () {
@@ -367,6 +394,16 @@
     </script>
 </head>
 <body>
+    <svg id="pwaBorderAnim" viewBox="0 0 100 100" preserveAspectRatio="none">
+  <rect
+    x="1"
+    y="1"
+    width="98"
+    height="98"
+    rx="6"
+    ry="6"
+  />
+    </svg>
 <div id="mainContainer" style="width: 100%; max-width: 100%; border-radius: 20px; padding: 10px 10px 20px 10px; overflow-y: auto; overflow-x: hidden; background: var(--bg);">
 
   <div class="app-title no-print"
@@ -619,6 +656,7 @@
             <button class="btn-reset-soft" onclick="document.getElementById('modalConfirm').style.display='flex'">AZZERA DATABASE</button>
         </div>
     </div>
+    
     <script>
     // Compatibilità retroattiva: aggiungi tipoCarburante ai turni vecchi
 function aggiornaDBConTipoCarburante() {
@@ -1964,6 +2002,14 @@ function eseguiEliminazioneAnno() {
         modal.querySelector('h3').innerText = "Conferma Eliminazione";
         modal.querySelector('p').innerText = "Sei sicuro di voler eliminare questo elemento dallo storico?";
     }, 500);
+}
+</script>
+    <script>
+if (document.documentElement.classList.contains('pwa')) {
+  setTimeout(() => {
+    const svg = document.getElementById('pwaBorderAnim');
+    if (svg) svg.remove();
+  }, 1300);
 }
 </script>
 </body>
