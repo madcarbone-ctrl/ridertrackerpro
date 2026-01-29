@@ -62,7 +62,7 @@ padding: 8px;
   pointer-events: none;
 
   position: fixed;
-  inset: 6px;
+  inset: calc(env(safe-area-inset-top, 0px) + 6px) 6px 6px 6px;
 
   border: 1px solid rgba(0, 204, 188, 0.55);
   border-radius: 22px;
