@@ -57,6 +57,18 @@ padding: 8px;
 
   background: var(--bg);
 }
+        /* === CORNICE OVERLAY (NON STRUTTURALE) === */
+#appBorder {
+  pointer-events: none;
+
+  position: fixed;
+  inset: 6px;
+
+  border: 1px solid rgba(0, 204, 188, 0.55);
+  border-radius: 22px;
+
+  z-index: 999999;
+}
 
     #mainContainer {
         height: calc(100dvh - env(safe-area-inset-bottom, 0px)) !important;
@@ -616,6 +628,7 @@ padding: 8px;
     </div>
       </div> <!-- fine #mainContainer -->
 </div> <!-- fine #appFrame -->
+    <div id="appBorder"></div>
     <script>
     // Compatibilità retroattiva: aggiungi tipoCarburante ai turni vecchi
 function aggiornaDBConTipoCarburante() {
