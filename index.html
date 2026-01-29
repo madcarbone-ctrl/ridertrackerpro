@@ -38,7 +38,7 @@
     position: relative;
     inset: 0;
 
-    /* ⬅️ NIENTE FLEX */
+    /* IMPORTANTE */
     display: block;
         }
       
@@ -333,11 +333,12 @@
 @media (display-mode: standalone) {
     #mainContainer {
         position: fixed;
-        inset: 0;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
 
         width: 96vw;
         max-width: 96vw;
-        margin: auto;
 
         border-radius: 20px;
         border: 1px solid #333;
@@ -345,10 +346,7 @@
 
         box-sizing: border-box;
 
-        padding-top: 18px;
-        padding-right: 10px;
-        padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
-        padding-left: 10px;
+        padding: 18px 10px calc(40px + env(safe-area-inset-bottom, 0px)) 10px;
 
         overflow-y: auto;
         overflow-x: hidden;
