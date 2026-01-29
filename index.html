@@ -32,17 +32,15 @@
     padding: 0;
     text-align: center;
 
-    /* FIX STABILITÀ LAYOUT */
-    min-height: 100dvh;
+    height: 100vh;
     width: 100vw;
 
     position: relative;
     inset: 0;
 
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-}
+    /* ⬅️ NIENTE FLEX */
+    display: block;
+        }
       
 #mainContainer {
     min-height: 100dvh;
@@ -332,25 +330,21 @@
     }
 }
 
-
 @media (display-mode: standalone) {
     #mainContainer {
+        position: fixed;
+        inset: 0;
+
         width: 96vw;
         max-width: 96vw;
-
-        margin-left: auto;
-        margin-right: auto;
+        margin: auto;
 
         border-radius: 20px;
         border: 1px solid #333;
         background: var(--bg);
 
-        /* ALTEZZA STABILE */
-        height: calc(100dvh - env(safe-area-inset-bottom, 0px));
-        min-height: calc(100dvh - env(safe-area-inset-bottom, 0px));
         box-sizing: border-box;
 
-        /* ⬇️ SPAZIO SUPERIORE GARANTITO */
         padding-top: 18px;
         padding-right: 10px;
         padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
@@ -360,6 +354,8 @@
         overflow-x: hidden;
     }
 }
+
+        
     </style>
 </head>
 <body>
