@@ -1,4 +1,4 @@
-const CACHE = "rider-tracker-v1";
+const CACHE = "rider-trackerv1";
 const FILES = [
   "./",
   "./index.html",
