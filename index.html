@@ -32,14 +32,13 @@
     padding: 0;
     text-align: center;
 
-    height: 100vh;
     width: 100vw;
+    height: 100vh;
 
-    position: relative;
+    position: fixed;
     inset: 0;
 
-    /* IMPORTANTE */
-    display: block;
+    overflow: hidden;
         }
       
 #mainContainer {
@@ -332,13 +331,14 @@
 
 @media (display-mode: standalone) {
     #mainContainer {
-        position: fixed;
+        position: absolute;
         top: 15px;
         left: 50%;
         transform: translateX(-50%);
 
         width: 96vw;
         max-width: 96vw;
+        height: calc(100vh - 15px - env(safe-area-inset-bottom, 0px));
 
         border-radius: 20px;
         border: 1px solid #333;
