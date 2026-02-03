@@ -628,15 +628,14 @@
         </div>
     </div>
     <script>
-        <script>
 if (
   !window.matchMedia('(display-mode: standalone)').matches &&
   !window.navigator.standalone
 ) {
   window.location.replace('./index.html');
 }
-</script>
-    // Compatibilità retroattiva: aggiungi tipoCarburante ai turni vecchi
+
+// Compatibilità retroattiva: aggiungi tipoCarburante ai turni vecchi
 function aggiornaDBConTipoCarburante() {
     let aggiornato = false;
     
