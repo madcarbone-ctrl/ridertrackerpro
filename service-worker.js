@@ -1,4 +1,4 @@
-const CACHE = "rider-pwa-only-v1";
+const CACHE = "rider-prod-v1.3.1";
 const FILES = [
   "./",
   "./index.html",
