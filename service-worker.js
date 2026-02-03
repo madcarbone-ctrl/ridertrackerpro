@@ -1,11 +1,13 @@
-const CACHE = "rider-prod-v1.3.1";
+const CACHE = "rider-prod-v1.3-logo-fix";
+
 const FILES = [
   "./",
   "./index.html",
   "./app.html",
   "./manifest.json",
   "./icon-192.png",
-  "./icon-512.png"
+  "./icon-512.png",
+  "./logo-app.jpg"
 ];
 
 self.addEventListener("install", e => {
