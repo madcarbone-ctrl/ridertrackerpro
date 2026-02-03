@@ -1,10 +1,11 @@
 {
-  "name": "Rider Tracker Pro V1",
+  "name": "Rider Tracker Pro",
   "short_name": "RiderTracker",
-  "start_url": "./index.html",
+  "start_url": "./app.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0f0f0f",
-  "theme_color": "#0f0f0f",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "orientation": "portrait",
   "icons": [
     {
