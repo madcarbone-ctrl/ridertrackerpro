@@ -2036,11 +2036,10 @@ let chartOraInstance = null;
 let chartKmInstance = null;
 
 function apriResaView(){ 
-    document.getElementById('reportView').style.display = 'none'; 
-    document.getElementById('resaView').style.display = 'block'; 
+    document.getElementById('resaView').style.display = 'flex'; 
     disegnaGraficoResa(); 
 }
-
+        
 function chiudiResaView(){ 
     document.getElementById('resaView').style.display = 'none'; 
     document.getElementById('reportView').style.display = 'flex'; 
