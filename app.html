@@ -672,24 +672,35 @@
             </div>
             
             <div class="action-grid">
-    <button class="btn-rep-uniform" style="background: var(--primary); color: #000; border: none;" onclick="salvaBackup()">
+    <button class="btn-rep-uniform"
+            style="background: var(--primary); color: #000; border: none;"
+            onclick="salvaBackup()">
         <i class="fas fa-file-export"></i> Esporta backup
     </button>
 
-    <button class="btn-rep-uniform" style="background: var(--primary); color: #000; border: none;" onclick="document.getElementById('fileBackup').click()">
+    <button class="btn-rep-uniform"
+            style="background: var(--primary); color: #000; border: none;"
+            onclick="document.getElementById('fileBackup').click()">
         <i class="fas fa-file-import"></i> Importa backup
     </button>
 
     <input type="file" id="fileBackup" accept=".json" hidden>
 
-    <button class="btn-rep-uniform btn-grey-dark" style="grid-column: span 2; margin-top: 5px;" onclick="document.getElementById('reportView').style.display='none'">
+    <button class="btn-rep-uniform btn-grey-dark"
+            style="grid-column: span 2; margin-top: 5px;"
+            onclick="document.getElementById('reportView').style.display='none'">
         <i class="fas fa-times"></i> Chiudi
     </button>
-        </div>
-       <div id="resaView" style="display:none; position:fixed; inset:0; z-index:9500; background:#fff; color:#000;">
+</div>
+</div> <!-- CHIUSURA CORRETTA reportView -->
+
+<div id="resaView"
+     style="display:none; position:fixed; inset:0; z-index:9500; background:#fff; color:#000;">
     <div style="padding:15px; height:100%; display:flex; flex-direction:column; gap:10px;">
-        <h2 style="text-align:center; margin:5px 0 5px; font-size:16px; letter-spacing:1px;">ANALISI RESA</h2>
-        
+        <h2 style="text-align:center; margin:5px 0 5px; font-size:16px; letter-spacing:1px;">
+            ANALISI RESA
+        </h2>
+
         <div style="flex:1; min-height:0; border:1px solid #eee; border-radius:10px; padding:5px;">
             <canvas id="chartOra"></canvas>
         </div>
