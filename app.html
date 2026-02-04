@@ -2036,6 +2036,11 @@ let chartOraInstance = null;
 let chartKmInstance = null;
 
 function apriResaView(){ 
+    // chiude eventuale riepilogo aperto
+    const report = document.getElementById('reportView');
+    if (report) report.style.display = 'none';
+
+    // apre vista grafico
     document.getElementById('resaView').style.display = 'flex'; 
     disegnaGraficoResa(); 
 }
