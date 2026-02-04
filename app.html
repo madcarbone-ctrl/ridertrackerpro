@@ -671,26 +671,21 @@
 <div id="repFinalSummary"></div>
             </div>
             
-            <div class="report-fixed-footer no-print">
-                <div class="backup-grid">
-                    <button class="btn-rep-uniform" style="background: var(--primary); color: #000; border: none;" onclick="salvaBackup()">
-                        <i class="fas fa-file-export"></i> Esporta backup
-                    </button>
-                    <button class="btn-rep-uniform" style="background: var(--primary); color: #000; border: none;" onclick="document.getElementById('fileBackup').click()">
-                        <i class="fas fa-file-import"></i> Importa backup
-                    </button>
-                    <input type="file" id="fileBackup" accept=".json" hidden>
-                </div>
-                <div class="action-grid">
-                    <button class="btn-rep-uniform btn-black" onclick="window.print()">
-                        <i class="fas fa-print"></i> Stampa
-                    </button>
-                    <button id="btnGraficoResa" class="btn-rep-uniform" style="background: var(--accent); color: white; border: none;" onclick="apriResaView()">
-                        <i class="fas fa-chart-line"></i> Grafico resa
-                    </button>
-                    <button class="btn-rep-uniform btn-grey-dark" style="grid-column: span 2; margin-top: 5px;" onclick="document.getElementById('reportView').style.display='none'">
-                        <i class="fas fa-times"></i> Chiudi
-                    </button>
+            <div class="action-grid">
+    <button class="btn-rep-uniform" style="background: var(--primary); color: #000; border: none;" onclick="salvaBackup()">
+        <i class="fas fa-file-export"></i> Esporta backup
+    </button>
+
+    <button class="btn-rep-uniform" style="background: var(--primary); color: #000; border: none;" onclick="document.getElementById('fileBackup').click()">
+        <i class="fas fa-file-import"></i> Importa backup
+    </button>
+
+    <input type="file" id="fileBackup" accept=".json" hidden>
+
+    <button class="btn-rep-uniform btn-grey-dark" style="grid-column: span 2; margin-top: 5px;" onclick="document.getElementById('reportView').style.display='none'">
+        <i class="fas fa-times"></i> Chiudi
+    </button>
+            </div>
                 </div>
             </div>
         </div>
