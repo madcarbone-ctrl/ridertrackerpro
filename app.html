@@ -714,13 +714,20 @@
             <div class="foot-btn" style="color:var(--orange)" onclick="apriM('modalBenza')"><i class="fas fa-gas-pump" style="color:var(--orange)"></i>FUEL</div>
             <div class="foot-btn" style="color:var(--accent)" onclick="apriM('modalExtra')"><i class="fas fa-road" style="color:var(--accent)"></i>EXTRA</div>
             <div class="foot-btn" style="color:#ffffff" onclick="apriStorico()"><i class="fas fa-history" style="color:#ffffff"></i>STORICO</div>
-            <button class="btn-full" onclick="apriReport()" style="display: flex; justify-content: space-around; align-items: center; height: 50px; padding: 0 5px;">
-    <span style="flex: 1;">RIEPILOGO</span>
-    <span style="border-left: 1px solid rgba(0,0,0,0.2); height: 100%;"></span>
-    <span style="flex: 1;">GRAFICO</span>
-    <span style="border-left: 1px solid rgba(0,0,0,0.2); height: 100%;"></span>
-    <span style="flex: 1;">STAMPA</span>
-            </button>
+            <div style="grid-column: span 4; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 8px; margin-bottom: 8px;">
+                <button style="background: var(--primary); color: #000; padding: 16px 5px; border-radius: 15px; font-weight: 900; border: none; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer;" onclick="apriReport()">
+                    <i class="fas fa-file-alt" style="font-size: 18px;"></i>
+                    <span>RIEPILOGO</span>
+                </button>
+                <button style="background: var(--primary); color: #000; padding: 16px 5px; border-radius: 15px; font-weight: 900; border: none; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer;" onclick="apriReport(); setTimeout(() => { document.getElementById('reportView').scrollTop = document.getElementById('chartOra').offsetTop - 60; }, 100);">
+                    <i class="fas fa-chart-line" style="font-size: 18px;"></i>
+                    <span>GRAFICO</span>
+                </button>
+                <button style="background: var(--primary); color: #000; padding: 16px 5px; border-radius: 15px; font-weight: 900; border: none; font-size: 11px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer;" onclick="apriReport(); setTimeout(() => window.print(), 200);">
+                    <i class="fas fa-print" style="font-size: 18px;"></i>
+                    <span>STAMPA</span>
+                </button>
+            </div>
             <div id="resetSafe" class="safe-box" onclick="safeClick()">
   <div class="safe-door">
     <div class="safe-glass"></div>
