@@ -1,43 +1,39 @@
-const CACHE = "rider-prod-v1.3.0";
-
-const FILES = [
-  "./",
-  "./index.html",
-  "./app.html",
-  "./manifest.json",
-  "./icon-192.png",
-  "./icon-512.png"
+const CACHE_NAME = 'rider-tracker-v2.0';
+const ASSETS = [
+  './',
+  'index.html',
+  'manifest.json',
+  'icon-192.png',
+  'icon-512.png'
 ];
 
-self.addEventListener("install", e => {
-  self.skipWaiting();
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(FILES))
+// Installazione e salvataggio file in cache
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS);
+    })
   );
+  self.skipWaiting();
 });
 
-self.addEventListener("activate", e => {
-  e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(k => k !== CACHE).map(k => caches.delete(k))
-      )
-    )
+// Pulizia cache vecchie (fondamentale per rimuovere il vecchio sistema password)
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+      );
+    })
   );
   self.clients.claim();
 });
 
-self.addEventListener("fetch", e => {
-  const req = e.request;
-
-  if (req.destination === "image") {
-    e.respondWith(
-      fetch(req).catch(() => caches.match(req))
-    );
-    return;
-  }
-
-  e.respondWith(
-    caches.match(req).then(r => r || fetch(req))
+// Gestione richieste offline
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
   );
 });
