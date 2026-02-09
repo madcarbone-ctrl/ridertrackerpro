@@ -822,6 +822,89 @@ function aggiornaDBConTipoCarburante() {
     efficienza: null
 };
     const mesi = ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
+        /* ================== LINGUE ================== */
+const LANG = {
+  it: {
+    version: "VERSION",
+    lordo: "LORDO GUADAGNATO",
+    netto: "NETTO GUADAGNATO",
+    ore: "ORE TOT LAVORO",
+    consumo: "Q.TÀ CONSUMO",
+    media: "MEDIA CONSUMI",
+    spesa: "SPESA CARBURANTE",
+    obiettivo: "OBIETTIVO NETTO",
+    tassa: "TASSAZIONE %",
+    mancante: "LORDO MANCANTE",
+    storico: "STORICO",
+    turno: "TURNO",
+    fuel: "FUEL",
+    extra: "EXTRA",
+    riepilogo: "RIEPILOGO",
+    grafico: "GRAFICO",
+    stampa: "STAMPA"
+  },
+  en: {
+    version: "VERSION",
+    lordo: "GROSS EARNINGS",
+    netto: "NET EARNINGS",
+    ore: "TOTAL HOURS",
+    consumo: "FUEL USED",
+    media: "EFFICIENCY",
+    spesa: "FUEL COST",
+    obiettivo: "NET TARGET",
+    tassa: "TAX %",
+    mancante: "MISSING GROSS",
+    storico: "HISTORY",
+    turno: "SHIFT",
+    fuel: "FUEL",
+    extra: "EXTRA",
+    riepilogo: "SUMMARY",
+    grafico: "CHART",
+    stampa: "PRINT"
+  }
+};
+
+function cambiaLingua(lang) {
+  localStorage.setItem("app_lang", lang);
+  applicaLingua(lang);
+}
+
+function applicaLingua(lang) {
+  const t = LANG[lang] || LANG.it;
+
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll(".label")[0].innerText = t.lordo;
+  document.querySelectorAll(".label")[1].innerText = t.netto;
+  document.querySelectorAll(".label")[2].innerText = t.ore;
+  document.querySelectorAll(".label")[3].innerText = t.consumo;
+  document.querySelectorAll(".label")[4].innerText = t.media;
+  document.querySelectorAll(".label")[5].innerText = t.spesa;
+  document.querySelectorAll(".label")[6].innerText = t.obiettivo;
+  document.querySelectorAll(".label")[7].innerText = t.tassa;
+  document.querySelectorAll(".label")[8].innerText = t.mancante;
+
+  document.querySelectorAll(".foot-btn")[0].innerText = t.turno;
+  document.querySelectorAll(".foot-btn")[1].innerText = t.fuel;
+  document.querySelectorAll(".foot-btn")[2].innerText = t.extra;
+  document.querySelectorAll(".foot-btn")[3].innerText = t.storico;
+
+  const btn = document.querySelector(".btn-full");
+  if (btn) {
+    btn.children[0].innerText = t.riepilogo;
+    btn.children[2].innerText = t.grafico;
+    btn.children[4].innerText = t.stampa;
+  }
+
+  document.querySelectorAll(".btn-setting").forEach(b => {
+    b.classList.toggle("active", b.dataset.lang === lang);
+  });
+}
+
+(function initLingua(){
+  const lang = localStorage.getItem("app_lang") || "it";
+  applicaLingua(lang);
+})();
     let catElimina = ''; let idElimina = null;
     let tipoCarburantePrezzoIniziale = '';
     let meseDaEliminare = null;
