@@ -2280,28 +2280,6 @@ function eseguiEliminazioneAnno() {
         modal.querySelector('p').innerText = "Sei sicuro di voler eliminare questo elemento dallo storico?";
     }, 500);
 }
-
-function verificaPassword() {
-    const inputPassword = document.getElementById('passwordInput').value;
-    const passwordCorretta = '00000';
-    
-    if (inputPassword === passwordCorretta) {
-        document.getElementById('passwordScreen').style.display = 'none';
-        document.getElementById('mainContainer').style.display = 'block';
-        localStorage.setItem('app_authenticated', 'true');
-    } else {
-        document.getElementById('passwordError').style.display = 'block';
-        document.getElementById('passwordInput').value = '';
-    }
-}
-
-window.addEventListener('DOMContentLoaded', function() {
-    const isAuthenticated = localStorage.getItem('app_authenticated');
-    if (isAuthenticated === 'true') {
-        document.getElementById('passwordScreen').style.display = 'none';
-        document.getElementById('mainContainer').style.display = 'block';
-    }
-});
 </script>
 </body>
 </html>
