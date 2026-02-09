@@ -916,10 +916,19 @@ function resetSafe(){
   safeStep = 0;
 }
 function confermaReset() { 
+    // Avvia l'animazione visiva
+    document.querySelector('.safe-door').classList.add('open');
+    document.querySelector('.safe-lock').classList.add('unlock');
+
+    // Cancella i dati
     localStorage.removeItem('rider_db_final_v34');
     localStorage.removeItem('ultimo_carburante_turno');
     localStorage.removeItem('ultimo_carburante_turno_label');
-    setTimeout(() => { location.reload(); }, 50);
+
+    // Aspetta 1 secondo (1000ms) prima di ricaricare la pagina
+    setTimeout(() => { 
+        location.reload(); 
+    }, 1000);
 }
     function elimina(categoria, id) { 
     catElimina = categoria; 
