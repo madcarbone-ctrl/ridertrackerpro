@@ -476,7 +476,17 @@
         <h1 style="color:var(--primary); font-size:28px; margin-bottom:30px; text-transform:uppercase; font-weight:900;">RIDER TRACKER PRO</h1>
         <p style="color:var(--text); font-size:14px; margin-bottom:20px; line-height:1.6;">Per accedere all'applicazione è necessario richiedere la password nella pagina Facebook:</p>
         <a href="https://www.facebook.com/share/1AiU7ZZRjd/" target="_blank" style="color:var(--primary); font-size:12px; text-decoration:underline; display:block; margin-bottom:30px;">https://www.facebook.com/share/1AiU7ZZRjd/</a>
-        <input type="password" id="passwordInput" placeholder="Inserisci password" style="width:100%; padding:15px; background:var(--input-bg); border:1px solid #444; color:#fff; border-radius:12px; margin-bottom:15px; outline:none; font-size:16px; text-align:center;">
+        
+        <input
+  type="password"
+  id="passwordInput"
+  placeholder="Inserisci password"
+  inputmode="numeric"
+  pattern="[0-9]*"
+  autocomplete="one-time-code"
+  style="width:100%; padding:15px; background:var(--input-bg); border:1px solid #444; color:#fff; border-radius:12px; margin-bottom:15px; outline:none; font-size:16px; text-align:center;"
+>
+        
         <button onclick="verificaPassword()" style="width:100%; padding:16px; background:var(--primary); color:#000; border:none; border-radius:12px; font-weight:900; font-size:14px; text-transform:uppercase; cursor:pointer;">ACCEDI</button>
         <p id="passwordError" style="color:var(--accent); font-size:12px; margin-top:15px; display:none;">Password non corretta</p>
     </div>
