@@ -483,7 +483,10 @@
   placeholder="Inserisci password"
   inputmode="numeric"
   pattern="[0-9]*"
-  autocomplete="one-time-code"
+  autocomplete="off"
+  autocorrect="off"
+  autocapitalize="off"
+  enterkeyhint="done"
   style="width:100%; padding:15px; background:var(--input-bg); border:1px solid #444; color:#fff; border-radius:12px; margin-bottom:15px; outline:none; font-size:16px; text-align:center;"
 >
         
@@ -2317,5 +2320,16 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('passwordInput');
+  if (!input) return;
+
+  input.addEventListener('touchstart', () => {
+    input.removeAttribute('readonly');
+    input.focus();
+  }, { passive: true });
+});
+    </script>
 </body>
 </html>
