@@ -799,20 +799,25 @@ function aggiornaDBConTipoCarburante() {
         }); 
         
         if (window.visualViewport) {
-            window.visualViewport.addEventListener('resize', () => {
+    window.visualViewport.addEventListener('resize', () => {
 
-                if (window.visualViewport.height >= window.innerHeight - 50) {
-                    document.querySelectorAll('.modal-content').forEach(c => {
-                        c.style.transform = 'translateY(0)';
-                    });
-        
-                    if (document.activeElement && document.activeElement.tagName === "INPUT") {
-                        document.activeElement.blur();
-                    }
-                }
-            });
+        // ⛔️ NON chiudere la tastiera nella schermata password
+        const passwordScreen = document.getElementById('passwordScreen');
+        if (passwordScreen && passwordScreen.style.display !== 'none') {
+            return;
         }
-    }
+
+        if (window.visualViewport.height >= window.innerHeight - 50) {
+            document.querySelectorAll('.modal-content').forEach(c => {
+                c.style.transform = 'translateY(0)';
+            });
+
+            if (document.activeElement && document.activeElement.tagName === "INPUT") {
+                document.activeElement.blur();
+            }
+        }
+    });
+        }
     function salvaBackup() { const data = { timestamp: Date.now(), app: "RIDER TRACKER PRO", versione: "1.1", db: db }; const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = `backup_rider_${new Date().toISOString().slice(0,10)}.json`; a.click(); URL.revokeObjectURL(url); }
     function mostraModalBackup() { document.getElementById('modalBackupExport').style.display = 'flex'; }
     function accettaBackup() { salvaBackup(); document.getElementById('modalBackupExport').style.display = 'none'; }
