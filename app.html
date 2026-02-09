@@ -916,19 +916,21 @@ function resetSafe(){
   safeStep = 0;
 }
 function confermaReset() { 
-    // Avvia l'animazione visiva
-    document.querySelector('.safe-door').classList.add('open');
-    document.querySelector('.safe-lock').classList.add('unlock');
+    // 1. Avvia l'apertura visiva (assicurati che le classi esistano nel CSS)
+    const door = document.querySelector('.safe-door');
+    const lock = document.querySelector('.safe-lock');
+    if(door) door.classList.add('open');
+    if(lock) lock.classList.add('unlock');
 
-    // Cancella i dati
+    // 2. Cancella i dati dal database
     localStorage.removeItem('rider_db_final_v34');
     localStorage.removeItem('ultimo_carburante_turno');
     localStorage.removeItem('ultimo_carburante_turno_label');
 
-    // Aspetta 1 secondo (1000ms) prima di ricaricare la pagina
+    // 3. ASPETTA 1 SECONDO PRIMA DI RICARICARE
     setTimeout(() => { 
         location.reload(); 
-    }, 1000);
+    }, 1000); 
 }
     function elimina(categoria, id) { 
     catElimina = categoria; 
