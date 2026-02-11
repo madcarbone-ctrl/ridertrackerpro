@@ -480,17 +480,17 @@
      RIDER TRACKER PRO
     </h1>
     <p style="color:var(--text); font-size:14px; margin-bottom:20px; line-height:1.6;">
-     To access the application you must request the password on the Facebook page:
+     Per accedere all'applicazione &egrave; necessario richiedere la password nella pagina Facebook:
     </p>
     <a href="https://www.facebook.com/share/1AiU7ZZRjd/" style="color:var(--primary); font-size:12px; text-decoration:underline; display:block; margin-bottom:30px;" target="_blank">
      https://www.facebook.com/share/1AiU7ZZRjd/
     </a>
     <input id="passwordInput" placeholder="Inserisci password" style="width:100%; padding:15px; background:var(--input-bg); border:1px solid #444; color:#fff; border-radius:12px; margin-bottom:15px; outline:none; font-size:16px; text-align:center;" type="password"/>
     <button onclick="verificaPassword()" style="width:100%; padding:16px; background:var(--primary); color:#000; border:none; border-radius:12px; font-weight:900; font-size:14px; text-transform:uppercase; cursor:pointer;">
-     LOGIN
+     ACCEDI
     </button>
     <p id="passwordError" style="color:var(--accent); font-size:12px; margin-top:15px; display:none;">
-     Incorrect password
+     Password non corretta
     </p>
    </div>
   </div>
@@ -553,7 +553,7 @@
    <div class="grid no-print">
     <div class="card main">
      <span class="label">
-      GROSS EARNINGS
+      LORDO GUADAGNATO
      </span>
      <span class="val">
       &euro;
@@ -564,7 +564,7 @@
     </div>
     <div class="card main">
      <span class="label">
-      NET EARNINGS
+      NETTO GUADAGNATO
      </span>
      <span class="val" id="netto">
       &euro;0.00
@@ -572,7 +572,7 @@
     </div>
     <div class="card">
      <span class="label">
-      TOTAL WORK HOURS
+      ORE TOT LAVORO
      </span>
      <span class="val" id="ore">
       0.0
@@ -580,7 +580,7 @@
     </div>
     <div class="card">
      <span class="label">
-      FUEL AMOUNT
+      Q.T&Agrave; CONSUMO
      </span>
      <span class="val" id="cons" onclick="apriMulti('consumo')">
       0.0L
@@ -588,7 +588,7 @@
     </div>
     <div class="card">
      <span class="label">
-      AVERAGE CONSUMPTION
+      MEDIA CONSUMI
      </span>
      <span class="val" id="kml" onclick="apriMulti('efficienza')">
       0.0
@@ -596,7 +596,7 @@
     </div>
     <div class="card">
      <span class="label">
-      FUEL COST
+      SPESA CARBURANTE
      </span>
      <span class="val" id="spesaB">
       &euro;0.00
@@ -604,19 +604,19 @@
     </div>
     <div class="card">
      <span class="label">
-      NET TARGET
+      OBIETTIVO NETTO
      </span>
      <input autocomplete="off" id="targetIn" oninput="aggiornaTarget()" placeholder="Inserisci" type="number"/>
     </div>
     <div class="card">
      <span class="label">
-      TAX RATE %
+      TASSAZIONE %
      </span>
      <input autocomplete="off" id="taxIn" oninput="aggiornaTax()" placeholder="Inserisci" type="number"/>
     </div>
     <div class="card">
      <span class="label">
-      REMAINING GROSS
+      LORDO MANCANTE
      </span>
      <span class="val" id="mancante">
       &euro;0.00
@@ -626,7 +626,7 @@
    <div class="progress-container no-print">
     <div class="progress-header">
      <span>
-      TARGET
+      OBIETTIVO
       <span id="perc">
        0%
       </span>
@@ -648,20 +648,20 @@
    <div class="modal no-print" id="modalSelectCarburante" style="z-index: 10000;">
     <div class="modal-content" style="border-color: var(--orange);">
      <h3>
-      SELECT FUEL
+      SELEZIONA CARBURANTE
      </h3>
      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
       <button class="btn-option" onclick="selezionaCarburante('benzina', '⛽ Benzina')">
        <span>
         ⛽
        </span>
-       Gasoline
+       Benzina
       </button>
       <button class="btn-option" onclick="selezionaCarburante('diesel', '🛢️ Gasolio')">
        <span>
         🛢️
        </span>
-       Diesel
+       Gasolio
       </button>
       <button class="btn-option" onclick="selezionaCarburante('gpl', '🔵 GPL')">
        <span>
@@ -673,74 +673,74 @@
        <span>
         💨
        </span>
-       Methane
+       Metano
       </button>
       <button class="btn-option" onclick="selezionaCarburante('miscela', '🔀 Miscela')">
        <span>
         🔀
        </span>
-       Mix
+       Miscela
       </button>
      </div>
      <button class="btn-modal btn-close" onclick="document.getElementById('modalSelectCarburante').style.display='none'">
-      CANCEL
+      ANNULLA
      </button>
     </div>
    </div>
    <div class="modal no-print" id="modalTurno">
     <div class="modal-content">
      <h3>
-      New Shift
+      Nuovo Turno
      </h3>
      <div class="date-row" id="dateT">
      </div>
      <div class="modal no-print" id="modalSelectMezzo" style="z-index: 10000;">
       <div class="modal-content" style="border-color: var(--primary);">
        <h3>
-        SELECT VEHICLE
+        SELEZIONA MEZZO
        </h3>
        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
         <button class="btn-option" onclick="selezionaMezzo('auto', '🚗 Auto')">
          <span>
           🚗
          </span>
-         Car
+         Auto
         </button>
         <button class="btn-option" onclick="selezionaMezzo('moto', '🛵 Moto')">
          <span>
           🛵
          </span>
-         Motorcycle
+         Moto
         </button>
         <button class="btn-option" onclick="selezionaMezzo('bici', '🚲 Bici')">
          <span>
           🚲
          </span>
-         Bicycle
+         Bici
         </button>
        </div>
        <button class="btn-modal btn-close" onclick="document.getElementById('modalSelectMezzo').style.display='none'">
-        CANCEL
+        ANNULLA
        </button>
       </div>
      </div>
      <div class="modal no-print" id="modalSelectCarburanteTurno" style="z-index: 10001;">
       <div class="modal-content" style="border-color: var(--orange);">
        <h3>
-        SELECT FUEL
+        SELEZIONA CARBURANTE
        </h3>
        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
         <button class="btn-option" onclick="selezionaCarburanteTurno('benzina', '⛽ Benzina')">
          <span>
           ⛽
          </span>
-         Gasoline
+         Benzina
         </button>
         <button class="btn-option" onclick="selezionaCarburanteTurno('diesel', '🛢️ Gasolio')">
          <span>
           🛢️
          </span>
-         Diesel
+         Gasolio
         </button>
         <button class="btn-option" onclick="selezionaCarburanteTurno('gpl', '🔵 GPL')">
          <span>
@@ -752,17 +752,17 @@
          <span>
           💨
          </span>
-         Methane
+         Metano
         </button>
         <button class="btn-option" onclick="selezionaCarburanteTurno('miscela', '🔀 Miscela')">
          <span>
           🔀
          </span>
-         Mix
+         Miscela
         </button>
        </div>
        <button class="btn-modal btn-close" onclick="document.getElementById('modalSelectCarburanteTurno').style.display='none'">
-        CANCEL
+        ANNULLA
        </button>
       </div>
      </div>
@@ -789,17 +789,17 @@
      <input autocomplete="off" id="tK" placeholder="Km percorsi" type="number"/>
      <input autocomplete="off" id="tC" placeholder="Consumo:(Litri o Kg)/100 km" step="0.1" type="number"/>
      <button class="btn-modal btn-save" onclick="salvaTurno()">
-      SAVE
+      SALVA
      </button>
      <button class="btn-modal btn-close" onclick="chiudiModali()">
-      CANCEL
+      ANNULLA
      </button>
     </div>
    </div>
    <div class="modal no-print" id="modalBenza">
     <div class="modal-content" style="border-color: var(--orange);">
      <h3>
-      Refueling
+      Rifornimento
      </h3>
      <div class="date-row" id="dateB">
      </div>
@@ -818,10 +818,10 @@
       <input autocomplete="off" id="bPrezzoOlio" inputmode="decimal" oninput="formattaPrezzo(this)" placeholder="Prezzo olio (&euro;/kg)" type="text"/>
      </div>
      <button class="btn-modal btn-save" onclick="salvaBenza()" style="background: var(--orange);">
-      SAVE
+      SALVA
      </button>
      <button class="btn-modal btn-close" onclick="chiudiModali()">
-      CANCEL
+      ANNULLA
      </button>
     </div>
    </div>
@@ -836,30 +836,30 @@
      <input id="pIniziale" inputmode="decimal" oninput="formattaPrezzo(this)" placeholder="0.000" style="text-align: center; font-size: 24px; color: var(--primary); font-weight: bold;" type="text"/>
      <div id="campiOlioInizio" style="display:none; margin-top:15px;">
       <p style="font-size: 11px; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">
-       MIX DATA:
+       DATI MISCELA:
       </p>
       <input id="pPercMiscelaInizio" placeholder="% Miscela (es: 2 per 2%)" step="0.1" style="margin-bottom:10px; font-size:16px; padding:12px;" type="number"/>
       <input id="pOlioInizio" inputmode="decimal" oninput="formattaPrezzo(this)" placeholder="Prezzo olio (&euro;/kg)" style="font-size:16px; padding:12px;" type="text"/>
      </div>
      <button class="btn-modal btn-save" onclick="confermaPrezzoIniziale()">
-      SAVE AND CONTINUE
+      SALVA E CONTINUA
      </button>
      <button class="btn-modal btn-close" onclick="chiudiModali()">
-      CANCEL
+      ANNULLA
      </button>
     </div>
    </div>
    <div class="modal no-print" id="modalConfirm">
     <div class="modal-content" style="border-color: var(--accent);">
      <h3 style="color: var(--accent); font-size: 16px;">
-      Confirm Reset
+      Conferma Reset
      </h3>
      <p style="font-size: 13px; color: var(--text); margin: 15px 0;">
-      Do you want to reset the entire database?
+      Vuoi azzerare tutto il database?
      </p>
      <div class="confirm-buttons">
       <button class="btn-confirm-cancel" onclick="chiudiModali()">
-       CANCEL
+       ANNULLA
       </button>
       <button class="btn-confirm-ok" onclick="confermaReset()" style="background: var(--accent); color: white;">
        OK
@@ -873,14 +873,14 @@
       🔔 FINE MESE
      </h3>
      <p style="font-size: 13px; color: var(--text); margin: 15px 0;">
-      The month has ended. Do you want to print the PDF report of your activities?
+      Il mese &egrave; terminato. Vuoi stampare il Report PDF delle tue attivit&agrave;?
      </p>
      <div class="confirm-buttons">
       <button class="btn-confirm-cancel" onclick="chiudiModali()">
-       CLOSE
+       CHIUDI
       </button>
       <button class="btn-confirm-ok" onclick="stampaDirettaDaAlert()" style="background: var(--primary); color: #000;">
-       PRINT NOW
+       STAMPA ORA
       </button>
      </div>
     </div>
@@ -888,17 +888,17 @@
    <div class="modal no-print" id="modalElimina">
     <div class="modal-content" style="border-color: var(--accent);">
      <h3 style="color: var(--accent); font-size: 16px;">
-      Confirm Deletion
+      Conferma Eliminazione
      </h3>
      <p style="font-size: 13px; color: var(--text); margin: 15px 0;">
-      Are you sure you want to delete this item from history?
+      Sei sicuro di voler eliminare questo elemento dallo storico?
      </p>
      <div class="confirm-buttons">
       <button class="btn-confirm-cancel" onclick="chiudiModali()">
-       CANCEL
+       ANNULLA
       </button>
       <button class="btn-confirm-ok" id="btnConfermaElimina" style="background: var(--accent); color: white;">
-       DELETE
+       ELIMINA
       </button>
      </div>
     </div>
@@ -909,14 +909,14 @@
       💾 ESPORTA DATABASE
      </h3>
      <p style="font-size: 13px; color: var(--text); margin: 15px 0;">
-      Do you want to export a backup of the updated database?
+      Vuoi esportare un backup del database aggiornato?
      </p>
      <div class="confirm-buttons">
       <button class="btn-confirm-cancel" onclick="rifiutaBackup()">
        NO
       </button>
       <button class="btn-confirm-ok" onclick="accettaBackup()" style="background: var(--primary); color: #000;">
-       YES
+       SI
       </button>
      </div>
     </div>
@@ -940,30 +940,30 @@
       </i>
      </div>
      <button class="btn-modal btn-save" onclick="salvaExtraKm()" style="background: var(--accent);">
-      SAVE
+      SALVA
      </button>
      <button class="btn-modal btn-close" onclick="chiudiModali()">
-      CANCEL
+      ANNULLA
      </button>
     </div>
    </div>
    <div class="modal no-print" id="modalSelectCarburanteExtra" style="z-index: 10002;">
     <div class="modal-content" style="border-color: var(--orange);">
      <h3>
-      SELECT FUEL
+      SELEZIONA CARBURANTE
      </h3>
      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
       <button class="btn-option" onclick="selezionaCarburanteExtra('benzina', '⛽ Benzina')">
        <span>
         ⛽
        </span>
-       Gasoline
+       Benzina
       </button>
       <button class="btn-option" onclick="selezionaCarburanteExtra('diesel', '🛢️ Gasolio')">
        <span>
         🛢️
        </span>
-       Diesel
+       Gasolio
       </button>
       <button class="btn-option" onclick="selezionaCarburanteExtra('gpl', '🔵 GPL')">
        <span>
@@ -975,17 +975,17 @@
        <span>
         💨
        </span>
-       Methane
+       Metano
       </button>
       <button class="btn-option" onclick="selezionaCarburanteExtra('miscela', '🔀 Miscela')">
        <span>
         🔀
        </span>
-       Mix
+       Miscela
       </button>
      </div>
      <button class="btn-modal btn-close" onclick="document.getElementById('modalSelectCarburanteExtra').style.display='none'">
-      CANCEL
+      ANNULLA
      </button>
     </div>
    </div>
@@ -997,21 +997,21 @@
      <div id="multiBody">
      </div>
      <button class="btn-modal btn-close" onclick="chiudiModali()">
-      CLOSE
+      CHIUDI
      </button>
     </div>
    </div>
    <div class="no-print" id="histView">
     <div class="hist-header">
      <h2 style="color:var(--primary); text-align:center;">
-      HISTORY
+      STORICO
      </h2>
     </div>
     <div id="listaStorico">
     </div>
     <div class="hist-footer" style="padding-bottom: 40px; padding-left: 15px; padding-right: 15px;">
      <button class="btn-modal btn-close" onclick="document.getElementById('histView').style.display='none'">
-      CLOSE
+      CHIUDI
      </button>
     </div>
    </div>
@@ -1024,22 +1024,22 @@
      </div>
      <div class="report-section" style="border: 2px solid #000; padding: 8px; margin-bottom: 20px; overflow-x: auto;">
       <h3 style="margin-top: 0;">
-       SHIFT DETAILS
+       DETTAGLIO TURNI
       </h3>
       <table class="report-table">
        <thead>
         <tr>
          <th>
-          DATE
+          DATA
          </th>
          <th>
-          GROSS
+          LORDO
          </th>
          <th>
-          NET
+          NETTO
          </th>
          <th>
-          HOURS
+          ORE
          </th>
          <th>
           KM
@@ -1061,22 +1061,22 @@
      </div>
      <div class="report-section" style="border: 2px solid #000; padding: 8px; margin-bottom: 20px; overflow-x: auto;">
       <h3 style="margin-top: 0;">
-       REFUELING DETAILS
+       DETTAGLIO RIFORNIMENTI
       </h3>
       <table class="report-table">
        <thead>
         <tr>
          <th>
-          DATE
+          DATA
          </th>
          <th>
-          TYPE
+          TIPO
          </th>
          <th>
-          COST
+          SPESA
          </th>
          <th>
-          PRICE
+          PREZZO
          </th>
          <th>
           QTA
@@ -1089,28 +1089,28 @@
      </div>
      <div class="report-section" style="border: 2px solid #000; padding: 8px; margin-bottom: 20px; overflow-x: auto;">
       <h3 style="margin-top: 0;">
-       OPERATIONAL EFFICIENCY ANALYSIS
+       ANALISI EFFICIENZA OPERATIVA
       </h3>
       <table class="report-table">
        <thead>
         <tr>
          <th>
-          PERIOD
+          PERIODO
          </th>
          <th>
-          SHIFTS
+          TURNI
          </th>
          <th>
           KM
          </th>
          <th>
-          AVERAGE
+          MEDIA
          </th>
          <th>
-          FUEL
+          BENZINA
          </th>
          <th>
-          NET
+          NETTO
          </th>
          <th>
           &euro;/H
@@ -1144,12 +1144,12 @@
       <button class="btn-rep-uniform btn-black" onclick="window.print()">
        <i class="fas fa-print">
        </i>
-       Print
+       Stampa
       </button>
       <button class="btn-rep-uniform" id="btnGraficoResa" onclick="apriResaView()" style="background: var(--accent); color: white; border: none;">
        <i class="fas fa-chart-line">
        </i>
-       Performance chart
+       Grafico resa
       </button>
       <button class="btn-rep-uniform btn-grey-dark" onclick="document.getElementById('reportView').style.display='none'" style="grid-column: span 2; margin-top: 5px;">
        <i class="fas fa-times">
@@ -1198,16 +1198,16 @@
     <div class="foot-btn" onclick="apriStorico()" style="color:#ffffff">
      <i class="fas fa-history" style="color:#ffffff">
      </i>
-     HISTORY
+     STORICO
     </div>
     <button class="btn-full" onclick="apriReport()" style="display: flex; justify-content: space-around; align-items: center; height: 50px; padding: 0 5px;">
      <span style="flex: 1;">
-      SUMMARY
+      RIEPILOGO
      </span>
      <span style="border-left: 1px solid rgba(0,0,0,0.2); height: 100%;">
      </span>
      <span style="flex: 1;">
-      CHART
+      GRAFICO
      </span>
      <span style="border-left: 1px solid rgba(0,0,0,0.2); height: 100%;">
      </span>
@@ -2806,21 +2806,45 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 });
   </script>
- 
-<!-- LANGUAGE SWITCH -->
-<div id="langSwitch" style="position:fixed;top:10px;right:10px;z-index:9999;">
-  <button onclick="setLang('it')">IT</button>
-  <button onclick="setLang('en')">EN</button>
-</div>
-
-<script>
-let currentLang = localStorage.getItem('lang') || 'en';
-
-function setLang(lang){
-  localStorage.setItem('lang', lang);
-  location.reload();
+  <script>
+   function applyEN(){
+  document.querySelectorAll('*').forEach(el=>{
+    if(el.children.length===0){
+      const t = el.innerText.trim();
+      if(TRANS[t]) el.innerText = TRANS[t];
+    }
+  });
 }
-</script>
+  </script>
+  <div style="position:fixed;top:10px;right:10px;z-index:9999">
+   <button onclick="applyEN()">
+    EN
+   </button>
+  </div>
+  <script>
+   let lang = localStorage.getItem('lang') || 'en';
+const MAP = {'RIEPILOGO MESE DI FEBBRAIO': {'it': 'RIEPILOGO MESE DI FEBBRAIO', 'en': 'FEBRUARY MONTH SUMMARY'}, 'Nessun turno': {'it': 'Nessun turno', 'en': 'No shifts'}, 'Nessun rifornimento': {'it': 'Nessun rifornimento', 'en': 'No refueling'}, 'Dati insufficienti': {'it': 'Dati insufficienti', 'en': 'Insufficient data'}, 'MONITORAGGIO EXTRA LAVORO': {'it': 'MONITORAGGIO EXTRA LAVORO', 'en': 'EXTRA WORK TRACKING'}, 'RIEPILOGO GENERALE TURNI': {'it': 'RIEPILOGO GENERALE TURNI', 'en': 'GENERAL SHIFT SUMMARY'}, 'ORE TOTALI': {'it': 'ORE TOTALI', 'en': 'TOTAL HOURS'}, 'KM TURNI': {'it': 'KM TURNI', 'en': 'SHIFT KM'}, 'TOTALE KM': {'it': 'TOTALE KM', 'en': 'TOTAL KM'}, 'SPESA CARBURANTE': {'it': 'SPESA CARBURANTE', 'en': 'FUEL COST'}, 'COSTO MEDIO/KM': {'it': 'COSTO MEDIO/KM', 'en': 'AVERAGE COST / KM'}, 'LORDO TOTALE': {'it': 'LORDO TOTALE', 'en': 'TOTAL GROSS'}, 'NETTO FINALE': {'it': 'NETTO FINALE', 'en': 'FINAL NET'}, 'CHIUDI': {'it': 'CHIUDI', 'en': 'CLOSE'}};
 
-</body>
+function applyLang(){
+  document.querySelectorAll('*').forEach(el=>{
+    if(el.children.length===0){
+      const t = el.innerText.trim();
+      Object.keys(MAP).forEach(k=>{
+        if(t===MAP[k].it || t===MAP[k].en){
+          el.innerText = MAP[k][lang];
+        }
+      });
+    }
+  });
+}
+
+function setLang(l){
+  lang = l;
+  localStorage.setItem('lang', l);
+  applyLang();
+}
+
+document.addEventListener('DOMContentLoaded', applyLang);
+  </script>
+ </body>
 </html>
