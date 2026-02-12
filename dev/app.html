@@ -543,50 +543,58 @@
                       border-bottom: 1px solid rgba(0, 204, 188, 0.2);">
                 MARCO CARBONE
             </a>
-        </span>
-    </div>
+        </span>   
+  </div>
 
-      <div id="language-zone" style="text-align: center; margin-top: 15px; padding-bottom: 20px;">
-    <div class="gtranslate_wrapper"></div>
+      <div class="lang-links">
+    <a href="javascript:void(0)" onclick="doGTranslate('it|it')" class="lang-btn">IT</a>
+    <span style="color:#444">|</span>
+    <a href="javascript:void(0)" onclick="doGTranslate('it|en')" class="lang-btn">EN</a>
 </div>
 
+<div id="google_translate_element" style="display:none"></div>
+
 <style>
-    /* Rende il contenitore trasparente */
-    .gtranslate_wrapper {
-        display: inline-block !important;
-        background: transparent !important;
+    .lang-links {
+        text-align: center;
+        margin-top: 5px;
+        padding-bottom: 15px;
+        font-family: sans-serif;
+        font-size: 12px; /* Piccolissimo */
+        letter-spacing: 1px;
     }
-
-    /* Rende le bandierine belle visibili e cliccabili */
-    .gtranslate_wrapper img {
-        margin: 0 12px !important; /* Spazio tra bandiera IT e EN */
-        cursor: pointer !important;
-        border-radius: 5px !important;
-        border: 1px solid #444 !important; /* Bordino per farle risaltare sul nero */
-        box-shadow: 0px 0px 10px rgba(0, 204, 188, 0.2) !important; /* Leggero alone color acqua */
-        width: 35px !important; /* Dimensione fissa per farle vedere bene */
-        height: auto !important;
+    .lang-btn {
+        color: #888 !important; /* Colore grigio discreto */
+        text-decoration: none !important;
+        font-weight: bold;
+        padding: 5px 10px;
     }
-
-    /* Nasconde il vecchio selettore brutto di Google */
-    .gt_float_setter, .gt_selector, .gt_white {
+    .lang-btn:hover {
+        color: #00CCBC !important; /* Diventa color acqua quando lo tocchi */
+    }
+    /* Nasconde OGNI widget automatico che prova a uscire */
+    .skiptranslate, .gt_float_setter, #gt_float_wrapper {
         display: none !important;
     }
+    body { top: 0 !important; } /* Toglie lo spazio bianco che Google mette in alto */
 </style>
 
 <script>
-    window.gtranslateSettings = {
-        "default_language": "it",
-        "languages": ["it","en"],
-        "wrapper_selector": ".gtranslate_wrapper",
-        "flag_size": 32,
-        "horizontal_position": "inline",
-        "alt_flags": {"en":"usa"}
-    }
-</script>
-<script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'it', autoDisplay: false}, 'google_translate_element');
+}
 
-  </div>
+function doGTranslate(lang_pair) {
+    var lang = lang_pair.split('|')[1];
+    var teCombo = document.querySelector('.goog-te-combo');
+    if (teCombo) {
+        teCombo.value = lang;
+        teCombo.dispatchEvent(new Event('change'));
+    }
+}
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+      
         <div class="grid no-print">
             <div class="card main"><span class="label">LORDO GUADAGNATO</span><span class="val">€<span id="lordo">0.00</span></span></div>
             <div class="card main"><span class="label">NETTO GUADAGNATO</span><span class="val" id="netto">€0.00</span></div>
