@@ -469,11 +469,51 @@
   text-shadow:0 0 6px rgba(255,77,77,.6);
 }
     </style>
-    <div class="gtranslate_wrapper"></div>
-<script>window.gtranslateSettings = {"default_language":"it","languages":["it","en"],"wrapper_selector":".gtranslate_wrapper","flag_size":24,"alt_flags":{"en":"usa"}}</script>
-<script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+    
 </head>
 <body>
+    <div class="gtranslate_wrapper" id="gt-custom"></div>
+
+<style>
+    /* Sposta il widget in alto a sinistra e lo rimpicciolisce */
+    #gt-custom {
+        position: fixed !important;
+        top: 15px !important;   /* Distanza dall'alto */
+        left: 55px !important;  /* Spostato a destra della 'R' di Rider */
+        z-index: 9999999 !important;
+        transform: scale(0.8);  /* Lo rende più piccolo del 20% */
+        transform-origin: top left;
+    }
+
+    /* Forza il colore nero e stile minimale */
+    .gt_float_setter {
+        background-color: #000000 !important; /* Sfondo Nero */
+        border: 1px solid #333 !important;    /* Bordino scuro */
+        border-radius: 8px !important;
+        box-shadow: none !important;
+    }
+
+    /* Rende il testo del selettore più discreto */
+    .gt_selector {
+        color: #ffffff !important;
+        background-color: #000000 !important;
+        border: none !important;
+        font-size: 12px !important;
+    }
+</style>
+
+<script>
+    window.gtranslateSettings = {
+        "default_language": "it",
+        "languages": ["it", "en"],
+        "wrapper_selector": ".gtranslate_wrapper",
+        "flag_size": 20,                /* Bandiere più piccole */
+        "horizontal_position": "left",
+        "vertical_position": "top",
+        "alt_flags": { "en": "usa" }
+    }
+</script>
+<script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
 <div id="passwordScreen" style="display:none; position:fixed; inset:0; z-index:99999; background:var(--bg); align-items:center; justify-content:center; flex-direction:column; padding:20px;">
     <div style="text-align:center; max-width:350px; width:100%;">
         <h1 style="color:var(--primary); font-size:28px; margin-bottom:30px; text-transform:uppercase; font-weight:900;">RIDER TRACKER PRO</h1>
