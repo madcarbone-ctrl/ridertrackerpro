@@ -472,48 +472,53 @@
     
 </head>
 <body>
-    <div class="gtranslate_wrapper" id="gt-custom"></div>
+
+<div class="gtranslate_wrapper" id="gt-custom"></div>
 
 <style>
-    /* Sposta il widget in alto a sinistra e lo rimpicciolisce */
+    /* Posizione vicino alla R di Rider */
     #gt-custom {
         position: fixed !important;
-        top: 15px !important;   /* Distanza dall'alto */
-        left: 55px !important;  /* Spostato a destra della 'R' di Rider */
+        top: 18px !important;   /* Regola altezza */
+        left: 60px !important;  /* Regola distanza dalla R */
         z-index: 9999999 !important;
-        transform: scale(0.8);  /* Lo rende più piccolo del 20% */
-        transform-origin: top left;
+        transform: scale(0.85); /* Leggermente più grande per leggere */
     }
 
-    /* Forza il colore nero e stile minimale */
+    /* Sfondo nero del widget */
     .gt_float_setter {
-        background-color: #000000 !important; /* Sfondo Nero */
-        border: 1px solid #333 !important;    /* Bordino scuro */
-        border-radius: 8px !important;
-        box-shadow: none !important;
+        background-color: #000000 !important;
+        border: 1px solid var(--primary) !important; /* Bordino color acqua come la tua app */
+        border-radius: 6px !important;
     }
 
-    /* Rende il testo del selettore più discreto */
-    .gt_selector {
-        color: #ffffff !important;
-        background-color: #000000 !important;
-        border: none !important;
-        font-size: 12px !important;
+    /* Forza il testo IT/EN a essere bianco e visibile */
+    #gt-custom a, #gt-custom span, .gt_selector {
+        color: #ffffff !important; 
+        font-weight: bold !important;
+        font-size: 13px !important;
+        text-decoration: none !important;
+    }
+
+    /* Rimpicciolisce la freccina */
+    .gt_selector:after {
+        border-top-color: #ffffff !important;
     }
 </style>
 
 <script>
     window.gtranslateSettings = {
         "default_language": "it",
-        "languages": ["it", "en"],
+        "languages": ["it","en"],
         "wrapper_selector": ".gtranslate_wrapper",
-        "flag_size": 20,                /* Bandiere più piccole */
+        "flag_size": 18,
         "horizontal_position": "left",
         "vertical_position": "top",
-        "alt_flags": { "en": "usa" }
+        "alt_flags": {"en":"usa"}
     }
 </script>
 <script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+    
 <div id="passwordScreen" style="display:none; position:fixed; inset:0; z-index:99999; background:var(--bg); align-items:center; justify-content:center; flex-direction:column; padding:20px;">
     <div style="text-align:center; max-width:350px; width:100%;">
         <h1 style="color:var(--primary); font-size:28px; margin-bottom:30px; text-transform:uppercase; font-weight:900;">RIDER TRACKER PRO</h1>
