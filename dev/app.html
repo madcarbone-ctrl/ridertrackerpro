@@ -473,52 +473,7 @@
 </head>
 <body>
 
-<div class="gtranslate_wrapper" id="gt-custom"></div>
 
-<style>
-    /* Posizione vicino alla R di Rider */
-    #gt-custom {
-        position: fixed !important;
-        top: 18px !important;   /* Regola altezza */
-        left: 60px !important;  /* Regola distanza dalla R */
-        z-index: 9999999 !important;
-        transform: scale(0.85); /* Leggermente più grande per leggere */
-    }
-
-    /* Sfondo nero del widget */
-    .gt_float_setter {
-        background-color: #000000 !important;
-        border: 1px solid var(--primary) !important; /* Bordino color acqua come la tua app */
-        border-radius: 6px !important;
-    }
-
-    /* Forza il testo IT/EN a essere bianco e visibile */
-    #gt-custom a, #gt-custom span, .gt_selector {
-        color: #ffffff !important; 
-        font-weight: bold !important;
-        font-size: 13px !important;
-        text-decoration: none !important;
-    }
-
-    /* Rimpicciolisce la freccina */
-    .gt_selector:after {
-        border-top-color: #ffffff !important;
-    }
-</style>
-
-<script>
-    window.gtranslateSettings = {
-        "default_language": "it",
-        "languages": ["it","en"],
-        "wrapper_selector": ".gtranslate_wrapper",
-        "flag_size": 18,
-        "horizontal_position": "left",
-        "vertical_position": "top",
-        "alt_flags": {"en":"usa"}
-    }
-</script>
-<script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
-    
 <div id="passwordScreen" style="display:none; position:fixed; inset:0; z-index:99999; background:var(--bg); align-items:center; justify-content:center; flex-direction:column; padding:20px;">
     <div style="text-align:center; max-width:350px; width:100%;">
         <h1 style="color:var(--primary); font-size:28px; margin-bottom:30px; text-transform:uppercase; font-weight:900;">RIDER TRACKER PRO</h1>
@@ -590,6 +545,46 @@
             </a>
         </span>
     </div>
+
+      <div id="language-zone" style="text-align: center; margin-top: 15px; padding-bottom: 20px;">
+    <div class="gtranslate_wrapper"></div>
+</div>
+
+<style>
+    /* Rende il contenitore trasparente */
+    .gtranslate_wrapper {
+        display: inline-block !important;
+        background: transparent !important;
+    }
+
+    /* Rende le bandierine belle visibili e cliccabili */
+    .gtranslate_wrapper img {
+        margin: 0 12px !important; /* Spazio tra bandiera IT e EN */
+        cursor: pointer !important;
+        border-radius: 5px !important;
+        border: 1px solid #444 !important; /* Bordino per farle risaltare sul nero */
+        box-shadow: 0px 0px 10px rgba(0, 204, 188, 0.2) !important; /* Leggero alone color acqua */
+        width: 35px !important; /* Dimensione fissa per farle vedere bene */
+        height: auto !important;
+    }
+
+    /* Nasconde il vecchio selettore brutto di Google */
+    .gt_float_setter, .gt_selector, .gt_white {
+        display: none !important;
+    }
+</style>
+
+<script>
+    window.gtranslateSettings = {
+        "default_language": "it",
+        "languages": ["it","en"],
+        "wrapper_selector": ".gtranslate_wrapper",
+        "flag_size": 32,
+        "horizontal_position": "inline",
+        "alt_flags": {"en":"usa"}
+    }
+</script>
+<script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
 
   </div>
         <div class="grid no-print">
