@@ -432,8 +432,11 @@ window.onerror = function(message, source, lineno, colno, error) {
   </div>
 
   <div style="display:flex; gap:10px; justify-content:center; margin-bottom:15px;" class="no-print">
-    <button id="btnLangIT" onclick="cambiaLingua('it')" style="padding:8px 20px; border-radius:10px; border:2px solid var(--primary); background:var(--primary); color:#000; font-weight:bold; font-size:12px; cursor:pointer;">IT</button>
-    <button id="btnLangEN" onclick="cambiaLingua('en')" style="padding:8px 20px; border-radius:10px; border:2px solid #444; background:transparent; color:var(--text); font-weight:bold; font-size:12px; cursor:pointer;">EN</button>
+
+<span id="btnLangIT" class="lang-text" onclick="cambiaLingua('it')">IT</span>
+<span id="btnLangEN" class="lang-text" onclick="cambiaLingua('en')">EN</span>
+
+      
   </div>
 
     <div class="grid no-print">
