@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<html lang="it" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0f0f0f">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>RIDER TRACKER PRO V1.3</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root { --bg:#0f0f0f; --card:#1a1a1a; --primary:#00CCBC; --accent:#ff4d4d; --text:#e0e0e0; --dim:#888; --input-bg:#252525; --orange:#ffa500; --red-soft:#8b0000; }
+        :root {
+  --vh: 100dvh;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing:border-box; -webkit-tap-highlight-color:transparent; touch-action: manipulation; }
+        html { background:var(--bg); }
+        body { font-family:sans-serif; background:var(--bg); color:var(--text); margin:0; padding:0; text-align:center; height: 100vh; width: 100vw; position: fixed; inset: 0; display: flex; align-items: flex-start; justify-content: flex-start; overflow: hidden; }
+        
+        button, .foot-btn, .btn-full, .btn-modal, .btn-option, .clickable { cursor: pointer; -webkit-user-select: none; user-select: none; }
+        @media all and (display-mode: standalone) {
+            body { align-items: center; justify-content: center; margin-top: 24px; }
+            #mainContainer { max-height: 100vh; }
+        }
+        
+        #mainContainer {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 10px 10px 12px 10px;
+    box-sizing: border-box;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+        }
+
+        .foot-btn:active, .btn-full:active { transform: scale(0.95); transition: 0.1s; }
+        .app-title { margin:10px 0 15px; font-size:30px; font-weight:800; color:var(--primary); text-transform:uppercase; user-select:none; cursor: pointer; }
+        .grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-bottom:8px; }
+        .card { background:var(--card); height:75px; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:12px; border:1px solid #333; }
+        .label { font-size:8px; color:var(--dim); text-transform:uppercase; margin-bottom:4px; font-weight:bold; }
+        .val { font-size:14px; font-weight:bold; }
+        .card.main .val, #lordo, #mancante { color:var(--primary)!important; } 
+        #netto { color:var(--accent)!important; }
+        .card input { width:80%; background:transparent; border:none; border-bottom:1px solid #444; color:#fff; text-align:center; font-size:14px; outline:none; }
+        .progress-container { background:var(--card); padding:15px; border-radius:15px; margin-top: 0; margin-bottom:8px; border:1px solid #333; display: flex; flex-direction: column; gap: 8px; }
+        .progress-header { display:flex; justify-content:center; font-weight:bold; color:var(--primary); font-size:14px; text-transform: uppercase; letter-spacing: 1px; }
+        .progress-bar { background:#222; height:28px; border-radius:8px; overflow:hidden; border:1px solid #444; }
+        #bar { background:linear-gradient(90deg, var(--primary), #ccff00); height:100%; width:0%; transition:0.3s; }
+        .dash-info { display: flex; justify-content: space-between; align-items: center; padding: 0 5px; margin-top: 5px; }
+        #liveClock { font-weight:bold; color:var(--dim); font-size:11px; text-transform: uppercase; }
+        #mediaOraria { font-weight:bold; color:var(--primary); font-size:12px; }
+        .sticky-footer {
+    position:relative;
+    margin-top:0;
+    background:#161616;
+    padding:12px 15px 12px 15px;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:8px;
+    border-radius:25px;
+    border:1px solid #333;
+    z-index:1000;
+    margin-bottom:0;
+}
+.foot-btn { background:#222; border:1px solid #444; color:#fff; padding:12px 5px; border-radius:15px; display:flex; flex-direction:column; align-items:center; font-size:10px; font-weight: bold; }
+        .foot-btn i { font-size:20px; margin-bottom:5px; }
+        .btn-full {
+  grid-column:span 4;
+  background:var(--primary);
+  color:#000;
+  padding:16px;
+  border-radius:15px;
+  font-weight:900;
+  border:none;
+  font-size:13px;
+  text-transform:uppercase;
+
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+        .btn-reset-soft {
+    grid-column: span 4;
+    background: var(--red-soft);
+    color: #ccc;
+    border: none;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 10px;
+    margin-top: 8px;
+    text-transform: uppercase;
+        }
+        .report-fixed-footer { padding: 15px; padding-bottom: 45px; border-top: 1px solid #eee; background: #fff; }
+        .backup-grid, .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+        .btn-rep-uniform { width: 100%; padding: 10px 5px; border-radius: 10px; font-weight: 700; text-transform: uppercase; font-size: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border: 1.5px solid transparent; transition: 0.2s; }
+        .btn-grey-light { background: #f8f8f8; color: #555; border-color: #ddd; }
+        .btn-black { background: #1a1a1a; color: #fff; }
+        .btn-grey-dark { background: #666; color: #fff; }
+        .btn-rep-uniform i { font-size: 12px; }
+        .modal { display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); align-items: center; justify-content: center; }
+       .modal-content { background:var(--card); padding:20px; border-radius:24px; width:90%; max-width:320px; border:2px solid var(--primary); margin: auto; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; }
+        .modal h3 { margin-top: 0; font-size: 18px; color: var(--primary); text-transform: uppercase; }
+        .modal input { width:100%; padding:12px; background:var(--input-bg); border:1px solid #444; color:#fff; border-radius:12px; margin-bottom:10px; outline:none; font-size: 16px; }
+        #histView { display:none; position:fixed; inset:0; z-index:9000; background:var(--bg); flex-direction: column; padding: 15px; }
+        #listaStorico { flex-grow: 1; overflow-y: auto; margin-bottom: 15px; border-top: 1px solid #333; border-bottom: 1px solid #333; -webkit-overflow-scrolling: touch; }
+        #reportView { display:none; position:fixed; inset:0; z-index:8000; background:#fff; color:#000; flex-direction:column; text-align:left; }
+#chartOra, #chartKm { min-height: 200px; }
+        .report-scroll-area { flex: 1; overflow-y: auto; padding: 10px; -webkit-overflow-scrolling: touch; }
+        .report-header-mini { border-bottom:2px solid #000; padding-bottom:10px; margin-bottom:15px; text-align: center; }
+        .report-header-mini h2 { font-size:16px; margin:0; text-transform:uppercase; color: #000; letter-spacing: 1px; }
+  .report-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    font-size: 9px; 
+    margin-bottom: 15px; 
+    table-layout: auto;
+}
+.report-table td, .report-table th { 
+    padding: 3px 2px;
+    white-space: nowrap;
+    border: 1px solid #000;
+    text-align: center;
+}
+        .report-table th { background: #eee; font-weight: bold; }
+        .summary-box { border:2px solid #000; padding:10px; background:#fff; }
+        .summary-row { display:flex; justify-content:space-between; padding:4px 0; font-size:11px; color: #000; }
+        .summary-row.total { font-weight:bold; font-size:14px; border-top:2px solid #000; margin-top:5px; padding-bottom: 10px; }
+       .storico-item { background:#0f0f0f; padding:15px 5px; border-top:1px solid #333; border-bottom:1px solid #333; border-radius:12px; display:flex; justify-content:space-between; align-items:center; margin-bottom: 5px; position: relative; }
+        .storico-info { flex:1; text-align:left; padding: 0 10px; }
+        .tipo-label { font-size:9px; font-weight:900; text-transform:uppercase; letter-spacing:1.5px; display: flex; align-items: center; gap: 5px; }
+        .storico-date-row { display: flex; align-items: baseline; gap: 8px; font-weight: bold; font-size: 14px; margin-top: 2px; }
+        .storico-hour { color: var(--dim); font-size: 11px; font-weight: normal; }
+        .storico-main { font-size:18px; font-weight:bold; margin-top: 2px; }
+        .storico-sub { font-size:10px; color:var(--dim); line-height: 1.4; }
+        .btn-modal { width:100%; padding:14px; border-radius:12px; border:none; font-weight:bold; margin-top:8px; font-size: 15px; }
+        .btn-save { background:var(--primary); color:#000; }
+        .btn-close { background:#333; color:#fff; }
+        .confirm-buttons { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-confirm-ok { flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: bold; font-size: 14px; }
+        .btn-confirm-cancel { background: #333; color: white; flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: bold; font-size: 14px; }
+        .date-row { display:flex; gap:8px; margin-bottom:10px; }
+        .date-row select { background:#333; color:#fff; padding:10px; border-radius:10px; flex:1; border:1px solid #444; font-size: 14px; } 
+        #repEfficienzaBody td:nth-child(2), #repEfficienzaBody td:nth-child(4) { width: 1%; }
+        .tipo-abbrev-mi { font-size: 6px; }
+        .btn-option { width: 100%; padding: 15px; background: #252525; border: 1px solid #444; color: #fff; border-radius: 12px; font-size: 16px; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 15px; transition: 0.2s; }
+        .btn-option i { font-size: 20px; width: 25px; text-align: center; }
+        .btn-option:active { background: var(--primary); color: #000; border-color: var(--primary); transform: scale(0.98); }
+        .fake-select { width: 100%; padding: 12px; background: #252525; color: #fff; border-radius: 12px; border: 1px solid #444; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 16px; }
+        
+.month-group {
+  background: #0f0f0f;
+  border: 1px solid #333;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.month-header {
+  padding: 12px 14px;
+  background: linear-gradient(180deg, #2a2a2a, #181818);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid #111;
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    inset 0 -1px 0 rgba(0,0,0,0.6);
+  transition: transform 0.2s ease;
+}
+
+.month-header:active {
+  transform: translateY(1px);
+}
+
+.month-title {
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.month-summary {
+  font-size: 10px;
+  color: #aaa;
+  margin-top: 4px;
+}
+
+.month-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.month-chevron {
+  transition: 0.3s;
+}
+
+.month-body {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+  background: linear-gradient(180deg, #101010, #0b0b0b);
+  border-top: 1px solid rgba(255,255,255,0.03);
+  transform: translateY(-8px);
+  opacity: 0;
+  transition:
+    max-height 0.35s ease,
+    padding 0.3s ease,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease;
+}
+
+.month-body.open {
+  max-height: 5000px;
+  padding: 8px 0;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.btn-del-month {
+  color: var(--accent);
+  background: none;
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-rep-month {
+  color: #000;
+  background: var(--primary);
+  border: none;
+  border-radius: 5px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.btn-rep-month:active {
+  opacity: 0.7;
+}
+
+.clickable { cursor: pointer; }
+.clickable:active { opacity: 0.6; }
+
+@media print { 
+    html, body { height: auto !important; overflow: visible !important; position: static !important; }
+    body * { visibility: hidden; } 
+    #reportView, #reportView * { visibility: visible; } 
+    .no-print { display: none !important; visibility: hidden !important; } 
+    #reportView { position: absolute; left: 0; top: 0; width: 100%; display: block !important; height: auto !important; } 
+    .report-scroll-area { overflow: visible !important; height: auto !important; max-height: none !important; } 
+    .report-section { page-break-inside: avoid !important; border: 2px solid #000 !important; padding: 15px !important; margin-bottom: 20px !important; background: #fff !important; }
+    table { page-break-inside: auto; }
+    tr { page-break-inside: avoid; page-break-after: auto; }
+    .summary-box { page-break-inside: avoid !important; page-break-before: always !important; border: 3px solid #000 !important; padding: 20px !important; background: #fff !important; }
+    h3 { page-break-after: avoid; margin-top: 0 !important; }
+    #reportView * { color: #000 !important; background: #fff !important; border-color: #000 !important; box-shadow: none !important; text-shadow: none !important; }
+    table, th, td { border-color: #000 !important; background: #fff !important; color: #000 !important; }
+    th { font-weight: bold; background: #f0f0f0 !important; color: #000 !important; }
+    h1, h2, h3, h4, h5, h6 { color: #000 !important; }
+    i, svg { color: #000 !important; fill: #000 !important; }
+    hr { border: none !important; border-top: 2px solid #000 !important; }
+    .summary-row { color: #000 !important; background: #fff !important; border-color: #000 !important; }
+    span, div, p { color: #000 !important; }
+}
+
+@media (display-mode: standalone) {
+    #mainContainer {
+        width: 96vw;
+        max-width: 96vw;
+        margin-top: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 20px;
+        background: var(--bg);
+        height: calc(100dvh - env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+}
+
+.safe-box{
+  grid-column: span 4;
+  height:52px;
+  border-radius:12px;
+  background:linear-gradient(180deg,#2e2e2e,#161616);
+  border:1px solid #444;
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,.12),
+    inset 0 -2px 4px rgba(0,0,0,.7),
+    0 4px 6px rgba(0,0,0,.6);
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  cursor:pointer;
+  user-select:none;
+}
+
+.safe-door{
+  position:absolute;
+  inset:6px;
+  background:#222;
+  border-radius:10px;
+  transform-origin:left center;
+  transition:transform .6s cubic-bezier(.4,0,.2,1);
+}
+
+.safe-door.open{
+  transform:rotateY(-65deg);
+}
+
+.safe-glass{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,
+    rgba(255,255,255,.18),
+    rgba(255,255,255,.02));
+  backdrop-filter:blur(1px);
+  border-radius:10px;
+}
+
+.safe-lock{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:20px;
+  color:var(--accent);
+}
+
+.safe-lock.unlock i{
+  animation:unlockAnim .1s ease;
+}
+
+@keyframes unlockAnim{
+  0%{transform:rotate(0)}
+  30%{transform:rotate(-12deg)}
+  60%{transform:rotate(12deg)}
+  100%{transform:rotate(0)}
+}
+
+.safe-label{
+  position:relative;
+  z-index:1;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1px;
+  color:#ff4d4d;
+  text-shadow:0 0 6px rgba(255,77,77,.6);
+}
+    </style>
+</head>
+<body>
+    <div id="passwordScreen" style="display:none; position:fixed; inset:0; z-index:99999; background:var(--bg); align-items:center; justify-content:center; flex-direction:column; padding:20px;">
+    <div style="text-align:center; max-width:350px; width:100%;">
+        <h1 style="color:var(--primary); font-size:28px; margin-bottom:30px; text-transform:uppercase; font-weight:900;">RIDER TRACKER PRO</h1>
+        <p style="color:var(--text); font-size:14px; margin-bottom:20px; line-height:1.6;" data-translate="access_msg">Per accedere all'applicazione è necessario richiedere la password nella pagina Facebook:</p>
+        <a href="https://www.facebook.com/share/1AiU7ZZRjd/" target="_blank" style="color:var(--primary); font-size:12px; text-decoration:underline; display:block; margin-bottom:30px;">https://www.facebook.com/share/1AiU7ZZRjd/</a>
+        <input type="password" id="passwordInput" placeholder="Inserisci password" style="width:100%; padding:15px; background:var(--input-bg); border:1px solid #444; color:#fff; border-radius:12px; margin-bottom:15px; outline:none; font-size:16px; text-align:center;">
+        <button onclick="verificaPassword()" style="width:100%; padding:16px; background:var(--primary); color:#000; border:none; border-radius:12px; font-weight:900; font-size:14px; text-transform:uppercase; cursor:pointer;" data-translate="access_btn">ACCEDI</button>
+        <p id="passwordError" style="color:var(--accent); font-size:12px; margin-top:15px; display:none;" data-translate="password_error">Password non corretta</p>
+    </div>
+</div>
+<div id="mainContainer" style="display:block;">
+
+  <div class="app-title no-print"
+       style="display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+              margin: 14px 0 24px 0;
+              line-height: 1.03;">
+
+    <div onclick="document.getElementById('modalFineMese').style.display = 'flex';"
+         style="display: flex;
+                align-items: center;
+                font-family: sans-serif;
+                font-weight: 900;
+                font-size: 27px;
+                letter-spacing: -0.5px;
+                cursor: pointer;">
+
+        <span style="color: var(--primary);
+                     text-shadow: 0 0 15px rgba(0,204,188,0.4);">RIDER</span>
+
+        <span style="color: #ffffff;
+                     margin-left: 5px;">TRACKER</span>
+
+        <span style="color: var(--bg);
+                     background: var(--primary);
+                     padding: 2px 6px;
+                     border-radius: 5px;
+                     margin-left: 7px;
+                     font-size: 20px;
+                     font-weight: 900;">PRO</span>
+    </div>
+
+    <div style="display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+                font-weight: bold;
+                text-transform: uppercase;
+                font-size: 9px;
+                letter-spacing: 1px;">
+
+        <span style="color: var(--dim);">VERSION 1.3</span>
+        <span style="color: #444;">|</span>
+        <span style="color: var(--dim);">© 2026 by
+            <a href="https://facebook.com/madmaddj"
+               target="_blank"
+               style="color: var(--primary);
+                      text-decoration: none;
+                      border-bottom: 1px solid rgba(0, 204, 188, 0.2);">MARCO CARBONE</a>
+        </span>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:10px; justify-content:center; margin-bottom:15px;" class="no-print">
+    <button id="btnLangIT" onclick="cambiaLingua('it')" style="padding:8px 20px; border-radius:10px; border:2px solid var(--primary); background:var(--primary); color:#000; font-weight:bold; font-size:12px; cursor:pointer;">IT</button>
+    <button id="btnLangEN" onclick="cambiaLingua('en')" style="padding:8px 20px; border-radius:10px; border:2px solid #444; background:transparent; color:var(--text); font-weight:bold; font-size:12px; cursor:pointer;">EN</button>
+  </div>
+
+    <div class="grid no-print">
+        <div class="card main"><span class="label" data-translate="gross_earned">LORDO GUADAGNATO</span><span class="val">€<span id="lordo">0.00</span></span></div>
+        <div class="card main"><span class="label" data-translate="net_earned">NETTO GUADAGNATO</span><span class="val" id="netto">€0.00</span></div>
+        <div class="card"><span class="label" data-translate="hours_tot">ORE TOT LAVORO</span><span class="val" id="ore">0.0</span></div>
+        <div class="card"><span class="label" data-translate="consumption">Q.TÀ CONSUMO</span><span class="val" id="cons">0.0L</span></div>
+        <div class="card"><span class="label" data-translate="avg_consumption">MEDIA CONSUMI</span><span class="val" id="kml">0.0</span></div>
+        <div class="card"><span class="label" data-translate="fuel_cost">SPESA CARBURANTE</span><span class="val" id="spesaB">€0.00</span></div>
+        <div class="card"><span class="label" data-translate="net_target">OBIETTIVO NETTO</span><input type="number" id="targetIn" oninput="aggiornaTarget()" placeholder="Inserisci" autocomplete="off"></div>
+        <div class="card"><span class="label" data-translate="taxation">TASSAZIONE %</span><input type="number" id="taxIn" oninput="aggiornaTax()" placeholder="Inserisci" autocomplete="off"></div>
+        <div class="card"><span class="label" data-translate="gross_missing">LORDO MANCANTE</span><span class="val" id="mancante">€0.00</span></div>
+    </div>
+    <div class="progress-container no-print">
+        <div class="progress-header"><span data-translate="objective">OBIETTIVO</span> <span id="perc" style="margin-left:5px;">0%</span></div>
+        <div class="progress-bar"><div id="bar"></div></div>
+        <div class="dash-info"><div id="liveClock">--/--/-- 00:00:00</div><div id="mediaOraria" data-translate-prefix="average">MEDIA: €0.00/h</div></div>
+    </div>
+
+<div id="modalSelectCarburante" class="modal no-print" style="z-index: 10000;">
+    <div class="modal-content" style="border-color: var(--orange);">
+        <h3 data-translate="select_fuel">SELEZIONA CARBURANTE</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+            <button class="btn-option" onclick="selezionaCarburante('benzina', '⛽ Benzina')">
+                <span>⛽</span> <span data-translate="fuel_gas">Benzina</span>
+            </button>
+            <button class="btn-option" onclick="selezionaCarburante('diesel', '🛢️ Gasolio')">
+                <span>🛢️</span> <span data-translate="fuel_diesel">Gasolio</span>
+            </button>
+            <button class="btn-option" onclick="selezionaCarburante('gpl', '🔵 GPL')">
+                <span>🔵</span> GPL
+            </button>
+            <button class="btn-option" onclick="selezionaCarburante('metano', '💨 Metano')">
+                <span>💨</span> <span data-translate="fuel_cng">Metano</span>
+            </button>
+            <button class="btn-option" onclick="selezionaCarburante('miscela', '🔀 Miscela')">
+                <span>🔀</span> <span data-translate="fuel_mix">Miscela</span>
+            </button>
+        </div>
+        <button class="btn-modal btn-close" onclick="document.getElementById('modalSelectCarburante').style.display='none'" data-translate="cancel">ANNULLA</button>
+    </div>
+</div>
+<div id="modalTurno" class="modal no-print">
+<div class="modal-content">
+<h3 data-translate="new_shift">Nuovo Turno</h3>
+<div id="dateT" class="date-row"></div>
+
+<div id="modalSelectMezzo" class="modal no-print" style="z-index: 10000;">
+    <div class="modal-content" style="border-color: var(--primary);">
+        <h3 data-translate="select_vehicle">SELEZIONA MEZZO</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+            <button class="btn-option" onclick="selezionaMezzo('scooter', '🛵 Scooter')">
+                <span>🛵</span> Scooter
+            </button>
+            <button class="btn-option" onclick="selezionaMezzo('bici', '🚴 Bici')">
+                <span>🚴</span> <span data-translate="vehicle_bike">Bici</span>
+            </button>
+            <button class="btn-option" onclick="selezionaMezzo('auto', '🚗 Auto')">
+                <span>🚗</span> Auto
+            </button>
+            <button class="btn-option" onclick="selezionaMezzo('moto', '🏍️ Moto')">
+                <span>🏍️</span> Moto
+            </button>
+            <button class="btn-option" onclick="selezionaMezzo('monopattino', '🛴 Monopattino')">
+                <span>🛴</span> <span data-translate="vehicle_scooter">Monopattino</span>
+            </button>
+        </div>
+        <button class="btn-modal btn-close" onclick="document.getElementById('modalSelectMezzo').style.display='none'" data-translate="cancel">ANNULLA</button>
+    </div>
+</div>
+
+<div class="fake-select" onclick="document.getElementById('modalSelectMezzo').style.display='flex'">
+    <span id="labelMezzo">🛵 Scooter</span>
+    <i class="fas fa-chevron-down"></i>
+</div>
+<input type="hidden" id="tMezzo" value="scooter">
+
+<input type="number" id="tL" placeholder="Lordo (€)" inputmode="decimal" autocomplete="off">
+<input type="number" id="tO" placeholder="Ore" step="0.1" inputmode="decimal" autocomplete="off">
+<input type="number" id="tK" placeholder="KM" inputmode="decimal" autocomplete="off">
+
+<div id="modalSelectCarburanteTurno" class="modal no-print" style="z-index: 10000;">
+    <div class="modal-content" style="border-color: var(--orange);">
+        <h3 data-translate="select_fuel">SELEZIONA CARBURANTE</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+            <button class="btn-option" onclick="selezionaCarburanteTurno('benzina', '⛽ Benzina')">
+                <span>⛽</span> <span data-translate="fuel_gas">Benzina</span>
+            </button>
+            <button class="btn-option" onclick="selezionaCarburanteTurno('diesel', '🛢️ Gasolio')">
+                <span>🛢️</span> <span data-translate="fuel_diesel">Gasolio</span>
+            </button>
+            <button class="btn-option" onclick="selezionaCarburanteTurno('gpl', '🔵 GPL')">
+                <span>🔵</span> GPL
+            </button>
+            <button class="btn-option" onclick="selezionaCarburanteTurno('metano', '💨 Metano')">
+                <span>💨</span> <span data-translate="fuel_cng">Metano</span>
+            </button>
+            <button class="btn-option" onclick="selezionaCarburanteTurno('miscela', '🔀 Miscela')">
+                <span>🔀</span> <span data-translate="fuel_mix">Miscela</span>
+            </button>
+        </div>
+        <button class="btn-modal btn-close" onclick="document.getElementById('modalSelectCarburanteTurno').style.display='none'" data-translate="cancel">ANNULLA</button>
+    </div>
+</div>
+
+<div class="fake-select" onclick="document.getElementById('modalSelectCarburanteTurno').style.display='flex'">
+    <span id="labelCarburanteTurno">⛽ Benzina</span>
+    <i class="fas fa-chevron-down"></i>
+</div>
+<input type="hidden" id="tCarburante" value="benzina">
+
+<input type="number" id="tC" placeholder="Consumo (L/100km)" step="0.1" inputmode="decimal" autocomplete="off">
+
+<button class="btn-modal btn-save" onclick="salvaTurno()" data-translate="save">SALVA</button>
+<button class="btn-modal btn-close" onclick="chiudiModali()" data-translate="cancel">ANNULLA</button>
+</div>
+</div>
+
+<div id="modalBenza" class="modal no-print">
+<div class="modal-content" style="border-color: var(--orange);">
+<h3 data-translate="refuel">Rifornimento</h3>
+<div id="dateB" class="date-row"></div>
+
+<div class="fake-select" onclick="document.getElementById('modalSelectCarburante').style.display='flex'">
+    <span id="labelCarburante">⛽ Benzina</span>
+    <i class="fas fa-chevron-down"></i>
+</div>
+<input type="hidden" id="bTipo" value="benzina">
+
+<input type="number" id="bE" placeholder="Speso (€)" inputmode="decimal" autocomplete="off">
+<input type="text" id="bP" placeholder="€/L" inputmode="decimal" oninput="formattaPrezzo(this)" autocomplete="off">
+
+<div id="campiMiscela" style="display:none; margin-top:15px;">
+    <p style="font-size: 11px; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;" data-translate="mix_data">DATI MISCELA:</p>
+    <input type="number" id="bPercMiscela" placeholder="% Miscela" step="0.1" style="margin-bottom:10px; font-size:16px; padding:12px;">
+    <input type="text" id="bPrezzoOlio" placeholder="Prezzo olio (€/kg)" inputmode="decimal" oninput="formattaPrezzo(this)" style="font-size:16px; padding:12px;">
+</div>
+
+<button class="btn-modal btn-save" onclick="salvaBenza()" data-translate="save">SALVA</button>
+<button class="btn-modal btn-close" onclick="chiudiModali()" data-translate="cancel">ANNULLA</button>
+</div>
+</div>
+<div id="modalExtra" class="modal no-print">
+<div class="modal-content" style="border-color: var(--accent);">
+<h3 data-translate="extra_km">KM Extra</h3>
+<div id="dateE" class="date-row"></div>
+
+<div id="modalSelectCarburanteExtra" class="modal no-print" style="z-index: 10000;">
+    <div class="modal-content" style="border-color: var(--orange);">
+        <h3 data-translate="select_fuel">SELEZIONA CARBURANTE</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+            <button class="btn-option" onclick="selezionaCarburanteExtra('benzina', '⛽ Benzina')">
+                <span>⛽</span> <span data-translate="fuel_gas">Benzina</span>
+            </button>
+            <button class="btn-option" onclick="selezionaCarburanteExtra('diesel', '🛢️ Gasolio')">
+                <span>🛢️</span> <span data-translate="fuel_diesel">Gasolio</span>
+            </button>
+            <button class="btn-option" onclick="selezionaCarburanteExtra('gpl', '🔵 GPL')">
+                <span>🔵</span> GPL
+            </button>
+            <button class="btn-option" onclick="selezionaCarburanteExtra('metano', '💨 Metano')">
+                <span>💨</span> <span data-translate="fuel_cng">Metano</span>
+            </button>
+            <button class="btn-option" onclick="selezionaCarburanteExtra('miscela', '🔀 Miscela')">
+                <span>🔀</span> <span data-translate="fuel_mix">Miscela</span>
+            </button>
+        </div>
+        <button class="btn-modal btn-close" onclick="document.getElementById('modalSelectCarburanteExtra').style.display='none'" data-translate="cancel">ANNULLA</button>
+    </div>
+</div>
+
+<div class="fake-select" onclick="document.getElementById('modalSelectCarburanteExtra').style.display='flex'">
+    <span id="labelCarburanteExtra">⛽ Benzina</span>
+    <i class="fas fa-chevron-down"></i>
+</div>
+<input type="hidden" id="extraCarburanteInput" value="benzina">
+
+<input type="number" id="extraKmInput" placeholder="KM Extra" inputmode="decimal" autocomplete="off">
+<input type="number" id="extraMediaInput" placeholder="Consumo medio (L/100km)" step="0.1" inputmode="decimal" autocomplete="off">
+<input type="text" id="extraDescInput" placeholder="Descrizione (opzionale)" autocomplete="off">
+
+<button class="btn-modal btn-save" onclick="salvaExtraKm()" data-translate="save">SALVA</button>
+<button class="btn-modal btn-close" onclick="chiudiModali()" data-translate="cancel">ANNULLA</button>
+</div>
+</div>
+
+<div id="modalInizio" class="modal no-print">
+    <div class="modal-content" style="border-color: var(--orange);">
+        <h3 id="titlePrezzoIniziale" data-translate="initial_price">PREZZO INIZIALE</h3>
+        <p style="font-size: 12px; color: var(--dim); margin-bottom: 15px;" data-translate="initial_price_msg">Non ho trovato un prezzo precedente. Inserisci il prezzo attuale:</p>
+        <input type="text" id="pIniziale" placeholder="€/L o €/kg" inputmode="decimal" oninput="formattaPrezzo(this)" style="font-size:16px; padding:12px;">
+        
+        <div id="campiOlioInizio" style="display:none; margin-top:15px;">
+            <p style="font-size: 11px; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;" data-translate="mix_data">DATI MISCELA:</p>
+            <input type="number" id="pPercMiscelaInizio" placeholder="% Miscela" step="0.1" style="margin-bottom:10px; font-size:16px; padding:12px;">
+            <input type="text" id="pOlioInizio" placeholder="Prezzo olio (€/kg)" inputmode="decimal" oninput="formattaPrezzo(this)" style="font-size:16px; padding:12px;">
+        </div>
+
+        <button class="btn-modal btn-save" onclick="confermaPrezzoIniziale()" data-translate="save_continue">SALVA E CONTINUA</button>
+        <button class="btn-modal btn-close" onclick="chiudiModali()" data-translate="cancel">ANNULLA</button>
+    </div>
+</div>
+
+<div id="modalConfirm" class="modal no-print">
+    <div class="modal-content" style="border-color: var(--accent);">
+        <h3 style="color: var(--accent); font-size: 16px;" data-translate="confirm_reset">Conferma Reset</h3>
+        <p style="font-size: 13px; color: var(--text); margin: 15px 0;" data-translate="reset_msg">Vuoi azzerare tutto il database?</p>
+        <div class="confirm-buttons">
+            <button class="btn-confirm-cancel" onclick="chiudiModali()" data-translate="cancel">ANNULLA</button>
+            <button class="btn-confirm-ok" style="background: var(--accent); color: white;" onclick="confermaReset()">OK</button>
+        </div>
+    </div>
+</div>
+
+<div id="modalFineMese" class="modal no-print">
+    <div class="modal-content" style="border-color: var(--primary);">
+        <h3 style="font-size: 16px;" data-translate="end_month">🔔 FINE MESE</h3>
+        <p style="font-size: 13px; color: var(--text); margin: 15px 0;" data-translate="end_month_msg">Il mese è terminato. Vuoi stampare il Report PDF delle tue attività?</p>
+        <div class="confirm-buttons">
+            <button class="btn-confirm-cancel" onclick="chiudiModali()" data-translate="close">CHIUDI</button>
+            <button class="btn-confirm-ok" style="background: var(--primary); color: #000;" onclick="stampaDirettaDaAlert()" data-translate="print_now">STAMPA ORA</button>
+        </div>
+    </div>
+</div>
+<div id="modalElimina" class="modal no-print">
+    <div class="modal-content" style="border-color: var(--accent);">
+        <h3 style="color: var(--accent); font-size: 16px;" data-translate="confirm_delete">Conferma Eliminazione</h3>
+        <p style="font-size: 13px; color: var(--text); margin: 15px 0;" data-translate="delete_msg">Sei sicuro di voler eliminare?</p>
+        <div class="confirm-buttons">
+            <button class="btn-confirm-cancel" onclick="resetModaleElimina()" data-translate="cancel">ANNULLA</button>
+            <button id="btnConfermaElimina" class="btn-confirm-ok" style="background: var(--accent); color: white;" data-translate="delete">ELIMINA</button>
+        </div>
+    </div>
+</div>
+
+<div id="modalBackupExport" class="modal no-print">
+    <div class="modal-content" style="border-color: var(--primary);">
+        <h3 style="font-size: 16px;" data-translate="backup_title">📦 BACKUP DISPONIBILE</h3>
+        <p style="font-size: 13px; color: var(--text); margin: 15px 0;" data-translate="backup_msg">I tuoi dati sono stati modificati. Vuoi scaricare un backup di sicurezza?</p>
+        <div class="confirm-buttons">
+            <button class="btn-confirm-cancel" onclick="rifiutaBackup()" data-translate="not_now">NON ORA</button>
+            <button class="btn-confirm-ok" style="background: var(--primary); color: #000;" onclick="accettaBackup()" data-translate="download">SCARICA</button>
+        </div>
+    </div>
+</div>
+
+<div id="modalMulti" class="modal no-print">
+    <div class="modal-content" style="border-color: var(--primary);">
+        <h3 id="multiTitle" style="font-size: 16px;"></h3>
+        <div id="multiBody" style="font-size: 14px; color: var(--text); margin: 15px 0;"></div>
+        <button class="btn-modal btn-close" onclick="document.getElementById('modalMulti').style.display='none'" data-translate="close">CHIUDI</button>
+    </div>
+</div>
+
+<div id="histView" class="no-print">
+    <div style="background: var(--card); border-radius: 15px; padding: 15px; border: 1px solid #444; box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin-bottom: 15px;">
+        <h2 style="margin: 0 0 10px; font-size: 18px; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; text-align: center;" data-translate="history">STORICO</h2>
+    </div>
+    <div id="listaStorico"></div>
+    <button class="btn-full" onclick="document.getElementById('histView').style.display='none'" style="margin-bottom: 25px; padding: 15px;"><i class="fas fa-times"></i> <span data-translate="close">CHIUDI</span></button>
+</div>
+
+<div id="reportView">
+    <div class="report-scroll-area">
+        <div style="padding: 10px;">
+            <div class="report-header-mini no-print">
+                <h2 data-translate="report_title">REPORT MENSILE</h2>
+                <p id="reportMeseLabel" style="font-size: 12px; color: #666; margin-top: 5px;"></p>
+            </div>
+
+            <div class="report-section" style="margin-bottom: 20px;">
+                <h3 style="font-size: 14px; margin-bottom: 10px; color: #000; border-bottom: 1px solid #000; padding-bottom: 5px;" data-translate="shifts">Turni</h3>
+                <table class="report-table">
+                    <thead>
+                        <tr id="tableHeaderTurni">
+                            <th data-translate="col_date">Data</th>
+                            <th data-translate="col_gross">Lordo</th>
+                            <th data-translate="col_net">Netto</th>
+                            <th data-translate="col_hours">Ore</th>
+                            <th>KM</th>
+                            <th>C/100</th>
+                            <th data-translate="col_type_abbr">T</th>
+                            <th data-translate="col_qty_abbr">Q</th>
+                        </tr>
+                    </thead>
+                    <tbody id="repTurniBody"></tbody>
+                </table>
+            </div>
+
+            <div class="report-section" style="margin-bottom: 20px;">
+                <h3 style="font-size: 14px; margin-bottom: 10px; color: #000; border-bottom: 1px solid #000; padding-bottom: 5px;" data-translate="refuels">Rifornimenti</h3>
+                <table class="report-table">
+                    <thead>
+                        <tr id="tableHeaderFuel">
+                            <th data-translate="col_date">Data</th>
+                            <th data-translate="col_type">Tipo</th>
+                            <th data-translate="col_cost">Costo</th>
+                            <th data-translate="col_price">Prezzo</th>
+                            <th data-translate="col_qty">Q.tà</th>
+                        </tr>
+                    </thead>
+                    <tbody id="repBenzaBody"></tbody>
+                </table>
+            </div>
+
+            <div class="report-section" style="margin-bottom: 20px;">
+                <h3 style="font-size: 14px; margin-bottom: 10px; color: #000; border-bottom: 1px solid #000; padding-bottom: 5px;" data-translate="efficiency">Efficienza</h3>
+                <table class="report-table">
+                    <thead>
+                        <tr id="tableHeaderEff">
+                            <th data-translate="col_period">Periodo</th>
+                            <th data-translate="col_shifts">Turni</th>
+                            <th>KM</th>
+                            <th data-translate="col_avg">Media</th>
+                            <th data-translate="col_cost">Costo</th>
+                            <th data-translate="col_net">Netto</th>
+                            <th>€/H</th>
+                        </tr>
+                    </thead>
+                    <tbody id="repEfficienzaBody"></tbody>
+                </table>
+            </div>
+<div class="summary-box">
+                <h3 style="font-size: 14px; margin-bottom: 10px; text-transform: uppercase; color: #000;" data-translate="summary">RIEPILOGO</h3>
+                <div class="summary-row"><span data-translate="total_gross">Lordo totale:</span><span id="repLordo">€0.00</span></div>
+                <div class="summary-row"><span data-translate="fuel_expense">Spesa carburante:</span><span id="repSpesaB">€0.00</span></div>
+                <div class="summary-row"><span data-translate="taxation_applied">Tassazione applicata:</span><span id="repTassazione">€0.00</span></div>
+                <div class="summary-row total"><span data-translate="net_total">NETTO TOTALE:</span><span id="repNetto">€0.00</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="report-fixed-footer no-print">
+        <div class="backup-grid">
+            <button class="btn-rep-uniform" style="background: var(--primary); color: #000; border: none;" onclick="salvaBackup()">
+                <i class="fas fa-file-export"></i> Backup
+            </button>
+            <button class="btn-rep-uniform" style="background: var(--primary); color: #000; border: none;" onclick="document.getElementById('fileBackup').click()">
+                <i class="fas fa-file-import"></i> Restore
+            </button>
+            <input type="file" id="fileBackup" accept=".json" hidden>
+        </div>
+        <div class="action-grid">
+            <button class="btn-rep-uniform btn-black" onclick="window.print()">
+                <i class="fas fa-print"></i> <span data-translate="print">Stampa</span>
+            </button>
+            <button id="btnGraficoResa" class="btn-rep-uniform" style="background: var(--accent); color: white; border: none;" onclick="apriResaView()">
+                <i class="fas fa-chart-line"></i> <span data-translate="chart">Grafico</span>
+            </button>
+            <button class="btn-rep-uniform btn-grey-dark" style="grid-column: span 2; margin-top: 5px;" onclick="document.getElementById('reportView').style.display='none'">
+                <i class="fas fa-times"></i> <span data-translate="close">Chiudi</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="resaView" style="display:none; position:fixed; inset:0; z-index:9500; background:#fff; color:#000;">
+    <div style="padding:15px; height:100%; display:flex; flex-direction:column; gap:10px;">
+        <h2 style="text-align:center; margin:5px 0 5px; font-size:16px; letter-spacing:1px;" data-translate="yield_analysis">ANALISI RESA</h2>
+        <div style="flex:1; min-height:0; border:1px solid #eee; border-radius:10px; padding:5px;">
+            <canvas id="chartOra"></canvas>
+        </div>
+        <div style="flex:1; min-height:0; border:1px solid #eee; border-radius:10px; padding:5px;">
+            <canvas id="chartKm"></canvas>
+        </div>
+        <button class="btn-rep-uniform btn-grey-dark" style="margin-top:5px; margin-bottom: 40px;" onclick="chiudiResaView()">
+            <i class="fas fa-times"></i> <span data-translate="close">Chiudi</span>
+        </button>
+    </div>
+</div>
+
+<div class="sticky-footer no-print">
+    <div class="foot-btn" style="color:var(--primary)" onclick="apriM('modalTurno')">
+        <i class="fas fa-plus-circle" style="color:var(--primary)"></i><span data-translate="btn_shift">TURNO</span>
+    </div>
+    <div class="foot-btn" style="color:var(--orange)" onclick="apriM('modalBenza')">
+        <i class="fas fa-gas-pump" style="color:var(--orange)"></i><span data-translate="btn_fuel">FUEL</span>
+    </div>
+    <div class="foot-btn" style="color:var(--accent)" onclick="apriM('modalExtra')">
+        <i class="fas fa-road" style="color:var(--accent)"></i>EXTRA
+    </div>
+    <div class="foot-btn" style="color:#ffffff" onclick="apriStorico()">
+        <i class="fas fa-history" style="color:#ffffff"></i><span data-translate="btn_history">STORICO</span>
+    </div>
+    <button class="btn-full" onclick="apriReport()" style="display: flex; justify-content: space-around; align-items: center; height: 50px; padding: 0 5px;">
+        <span style="flex: 1;" data-translate="btn_summary">RIEPILOGO</span>
+        <span style="border-left: 1px solid rgba(0,0,0,0.2); height: 100%;"></span>
+        <span style="flex: 1;" data-translate="chart">GRAFICO</span>
+        <span style="border-left: 1px solid rgba(0,0,0,0.2); height: 100%;"></span>
+        <span style="flex: 1;" data-translate="print">STAMPA</span>
+    </button>
+    <div id="resetSafe" class="safe-box" onclick="safeClick()">
+  <div class="safe-door">
+    <div class="safe-glass"></div>
+    <div class="safe-lock"><i class="fas fa-lock" id="safeLockIcon"></i></div>
+  </div>
+  <div class="safe-label">RESET DB</div>
+</div>
+        </div>
+    </div>
+    <script>
+if (
+  !window.matchMedia('(display-mode: standalone)').matches &&
+  !window.navigator.standalone
+) {
+  window.location.replace('./index.html');
+}
+// ========== SISTEMA TRADUZIONI ==========
+const translations = {
+    it: {
+        access_msg: 'Per accedere all\'applicazione è necessario richiedere la password nella pagina Facebook:',
+        access_btn: 'ACCEDI',
+        password_error: 'Password non corretta',
+        gross_earned: 'LORDO GUADAGNATO',
+        net_earned: 'NETTO GUADAGNATO',
+        hours_tot: 'ORE TOT LAVORO',
+        consumption: 'Q.TÀ CONSUMO',
+        avg_consumption: 'MEDIA CONSUMI',
+        fuel_cost: 'SPESA CARBURANTE',
+        net_target: 'OBIETTIVO NETTO',
+        taxation: 'TASSAZIONE %',
+        gross_missing: 'LORDO MANCANTE',
+        objective: 'OBIETTIVO',
+        average: 'MEDIA:',
+        select_fuel: 'SELEZIONA CARBURANTE',
+        fuel_gas: 'Benzina',
+        fuel_diesel: 'Gasolio',
+        fuel_cng: 'Metano',
+        fuel_mix: 'Miscela',
+        cancel: 'ANNULLA',
+        new_shift: 'Nuovo Turno',
+        select_vehicle: 'SELEZIONA MEZZO',
+        vehicle_bike: 'Bici',
+        vehicle_scooter: 'Monopattino',
+        refuel: 'Rifornimento',
+        extra_km: 'KM Extra',
+        save: 'SALVA',
+        mix_data: 'DATI MISCELA:',
+        initial_price: 'PREZZO INIZIALE',
+        initial_price_msg: 'Non ho trovato un prezzo precedente. Inserisci il prezzo attuale:',
+        save_continue: 'SALVA E CONTINUA',
+        confirm_reset: 'Conferma Reset',
+        reset_msg: 'Vuoi azzerare tutto il database?',
+        end_month: '🔔 FINE MESE',
+        end_month_msg: 'Il mese è terminato. Vuoi stampare il Report PDF delle tue attività?',
+        close: 'CHIUDI',
+        print_now: 'STAMPA ORA',
+        confirm_delete: 'Conferma Eliminazione',
+        delete_msg: 'Sei sicuro di voler eliminare?',
+        delete: 'ELIMINA',
+        backup_title: '📦 BACKUP DISPONIBILE',
+        backup_msg: 'I tuoi dati sono stati modificati. Vuoi scaricare un backup di sicurezza?',
+        not_now: 'NON ORA',
+        download: 'SCARICA',
+        btn_shift: 'TURNO',
+        btn_fuel: 'FUEL',
+        btn_history: 'STORICO',
+        btn_summary: 'RIEPILOGO',
+        chart: 'GRAFICO',
+        print: 'STAMPA',
+        history: 'STORICO',
+        report_title: 'REPORT MENSILE',
+        shifts: 'Turni',
+        refuels: 'Rifornimenti',
+        efficiency: 'Efficienza',
+        summary: 'RIEPILOGO',
+        col_date: 'Data',
+        col_gross: 'Lordo',
+        col_net: 'Netto',
+        col_hours: 'Ore',
+        col_type: 'Tipo',
+        col_cost: 'Costo',
+        col_price: 'Prezzo',
+        col_qty: 'Q.tà',
+        col_period: 'Periodo',
+        col_shifts: 'Turni',
+        col_avg: 'Media',
+        col_type_abbr: 'T',
+        col_qty_abbr: 'Q',
+        total_gross: 'Lordo totale:',
+        fuel_expense: 'Spesa carburante:',
+        taxation_applied: 'Tassazione applicata:',
+        net_total: 'NETTO TOTALE:',
+        yield_analysis: 'ANALISI RESA',
+        detail: 'CLICCA',
+        month_current: 'MESE CORRENTE',
+        archive_root: 'ARCHIVIO',
+        year: 'ANNO',
+        delete_month: 'ELIMINA MESE',
+        delete_year: 'ELIMINA ANNO',
+        delete_month_msg: 'Vuoi eliminare tutti i dati del mese {month}?',
+        no_data: 'Nessun dato disponibile per il periodo selezionato',
+        chart_eur_h: '€/h',
+        chart_eur_km: '€/km',
+        alert_future: 'Non puoi inserire una data futura',
+        alert_no_refuel: 'Nessun rifornimento trovato per questo carburante',
+        alert_missing: 'Compila tutti i campi obbligatori',
+        alert_mix: 'Inserisci % miscela e prezzo olio',
+        insert_last_price: 'Inserisci il prezzo dell\'ultimo rifornimento',
+        insert_ph: 'Inserisci',
+        ph_desc: 'Descrizione (opzionale)',
+        ph_hours: 'Ore',
+        ph_km: 'KM',
+        ph_spent: 'Speso',
+        ph_cons_l: 'Consumo (L/100km)',
+        ph_cons_kg: 'Consumo (kg/100km)'
+    },
+    en: {
+        access_msg: 'To access the application you need to request the password on the Facebook page:',
+        access_btn: 'ACCESS',
+        password_error: 'Incorrect password',
+        gross_earned: 'GROSS EARNED',
+        net_earned: 'NET EARNED',
+        hours_tot: 'HOURS WORKED',
+        consumption: 'FUEL QTY',
+        avg_consumption: 'AVG CONSUMPTION',
+        fuel_cost: 'FUEL COST',
+        net_target: 'NET TARGET',
+        taxation: 'TAXATION %',
+        gross_missing: 'GROSS MISSING',
+        objective: 'TARGET',
+        average: 'AVERAGE:',
+        select_fuel: 'SELECT FUEL',
+        fuel_gas: 'Gasoline',
+        fuel_diesel: 'Diesel',
+        fuel_cng: 'CNG',
+        fuel_mix: 'Mix',
+        cancel: 'CANCEL',
+        new_shift: 'New Shift',
+        select_vehicle: 'SELECT VEHICLE',
+        vehicle_bike: 'Bike',
+        vehicle_scooter: 'E-Scooter',
+        refuel: 'Refuel',
+        extra_km: 'Extra KM',
+        save: 'SAVE',
+        mix_data: 'MIX DATA:',
+        initial_price: 'INITIAL PRICE',
+        initial_price_msg: 'No previous price found. Enter the current price:',
+        save_continue: 'SAVE & CONTINUE',
+        confirm_reset: 'Confirm Reset',
+        reset_msg: 'Do you want to reset the entire database?',
+        end_month: '🔔 END OF MONTH',
+        end_month_msg: 'The month has ended. Do you want to print the PDF report of your activities?',
+        close: 'CLOSE',
+        print_now: 'PRINT NOW',
+        confirm_delete: 'Confirm Deletion',
+        delete_msg: 'Are you sure you want to delete?',
+        delete: 'DELETE',
+        backup_title: '📦 BACKUP AVAILABLE',
+        backup_msg: 'Your data has been modified. Do you want to download a backup?',
+        not_now: 'NOT NOW',
+        download: 'DOWNLOAD',
+        btn_shift: 'SHIFT',
+        btn_fuel: 'FUEL',
+        btn_history: 'HISTORY',
+        btn_summary: 'SUMMARY',
+        chart: 'CHART',
+        print: 'PRINT',
+        history: 'HISTORY',
+        report_title: 'MONTHLY REPORT',
+        shifts: 'Shifts',
+        refuels: 'Refuels',
+        efficiency: 'Efficiency',
+        summary: 'SUMMARY',
+        col_date: 'Date',
+        col_gross: 'Gross',
+        col_net: 'Net',
+        col_hours: 'Hours',
+        col_type: 'Type',
+        col_cost: 'Cost',
+        col_price: 'Price',
+        col_qty: 'Qty',
+        col_period: 'Period',
+        col_shifts: 'Shifts',
+        col_avg: 'Avg',
+        col_type_abbr: 'T',
+        col_qty_abbr: 'Q',
+        total_gross: 'Total gross:',
+        fuel_expense: 'Fuel expense:',
+        taxation_applied: 'Taxation applied:',
+        net_total: 'NET TOTAL:',
+        yield_analysis: 'YIELD ANALYSIS',
+        detail: 'CLICK',
+        month_current: 'CURRENT MONTH',
+        archive_root: 'ARCHIVE',
+        year: 'YEAR',
+        delete_month: 'DELETE MONTH',
+        delete_year: 'DELETE YEAR',
+        delete_month_msg: 'Do you want to delete all data for month {month}?',
+        no_data: 'No data available for the selected period',
+        chart_eur_h: '€/h',
+        chart_eur_km: '€/km',
+        alert_future: 'You cannot enter a future date',
+        alert_no_refuel: 'No refuel found for this fuel type',
+        alert_missing: 'Fill in all required fields',
+        alert_mix: 'Enter mix % and oil price',
+        insert_last_price: 'Enter the price of the last refuel',
+        insert_ph: 'Enter',
+        ph_desc: 'Description (optional)',
+        ph_hours: 'Hours',
+        ph_km: 'KM',
+        ph_spent: 'Spent',
+        ph_cons_l: 'Consumption (L/100km)',
+        ph_cons_kg: 'Consumption (kg/100km)'
+    }
+};
+let currentLang = localStorage.getItem('app_lang') || 'it';
+
+function t(key) {
+    return translations[currentLang][key] || key;
+}
+
+function updateInterface() {
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        el.innerText = t(key);
+    });
+    
+    document.getElementById('targetIn').placeholder = t('insert_ph');
+    document.getElementById('taxIn').placeholder = t('insert_ph');
+    document.getElementById('extraDescInput').placeholder = t('ph_desc');
+    document.getElementById('tL').placeholder = t('col_gross') + ' (€)';
+    document.getElementById('tO').placeholder = t('ph_hours');
+    document.getElementById('tK').placeholder = t('ph_km');
+    document.getElementById('bE').placeholder = t('ph_spent') + ' (€)';
+    document.getElementById('extraKmInput').placeholder = 'KM Extra';
+    
+    const headTurni = document.getElementById('tableHeaderTurni');
+    if(headTurni) headTurni.innerHTML = `<th>${t('col_date')}</th><th>${t('col_gross')}</th><th>${t('col_net')}</th><th>${t('col_hours')}</th><th>KM</th><th>C/100</th><th>${t('col_type_abbr')}</th><th>${t('col_qty_abbr')}</th>`;
+    
+    const headFuel = document.getElementById('tableHeaderFuel');
+    if(headFuel) headFuel.innerHTML = `<th>${t('col_date')}</th><th>${t('col_type')}</th><th>${t('col_cost')}</th><th>${t('col_price')}</th><th>${t('col_qty')}</th>`;
+    
+    const headEff = document.getElementById('tableHeaderEff');
+    if(headEff) headEff.innerHTML = `<th>${t('col_period')}</th><th>${t('col_shifts')}</th><th>KM</th><th>${t('col_avg')}</th><th>${t('col_cost')}</th><th>${t('col_net')}</th><th>€/H</th>`;
+
+    document.getElementById('btnLangIT').style.background = currentLang === 'it' ? 'var(--primary)' : 'transparent';
+    document.getElementById('btnLangIT').style.color = currentLang === 'it' ? '#000' : 'var(--text)';
+    document.getElementById('btnLangIT').style.borderColor = currentLang === 'it' ? 'var(--primary)' : '#444';
+    document.getElementById('btnLangEN').style.background = currentLang === 'en' ? 'var(--primary)' : 'transparent';
+    document.getElementById('btnLangEN').style.color = currentLang === 'en' ? '#000' : 'var(--text)';
+    document.getElementById('btnLangEN').style.borderColor = currentLang === 'en' ? 'var(--primary)' : '#444';
+    
+    calcola();
+}
+
+function cambiaLingua(lang) {
+    currentLang = lang;
+    localStorage.setItem('app_lang', lang);
+    document.getElementById('htmlRoot').lang = lang;
+    updateInterface();
+}
+
+// ========== FINE SISTEMA TRADUZIONI ==========
+function aggiornaDBConTipoCarburante() {
+    let aggiornato = false;
+    
+    db.turni.forEach(t => {
+        if (!t.tipoCarburante) {
+            t.tipoCarburante = 'benzina';
+            aggiornato = true;
+        }
+    });
+    
+    db.rifornimenti.forEach(r => {
+        if (!r.tipo) {
+            r.tipo = 'benzina';
+            aggiornato = true;
+        }
+    });
+    
+    if (aggiornato) {
+        localStorage.setItem('rider_db_final_v34', JSON.stringify(db));
+    }
+}
+    let db = JSON.parse(localStorage.getItem('rider_db_final_v34')) || { turni: [], rifornimenti: [], extraKm: [], targets: {}, tax: null };
+    let multiSnapshot = {
+    consumo: null,
+    efficienza: null
+};
+    const mesiIt = ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
+    const mesiEn = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+let catElimina = '', idElimina = null, tipoCarburantePrezzoIniziale = '', meseDaEliminare = null, annoDaEliminare = null, reportMeseKey = null;
+
+let safeStep = 0;
+let safeTimeout = null;
+
+function safeClick(){
+  if(safeStep === 0){
+    document.querySelector('.safe-door').classList.add('open');
+    document.getElementById('safeLockIcon').classList.replace('fa-lock','fa-lock-open');
+    safeStep = 1;
+    safeTimeout = setTimeout(resetSafe, 1000);
+  }
+  else{
+    clearTimeout(safeTimeout);
+    resetSafe();
+    document.getElementById('modalConfirm').style.display = 'flex';
+  }
+}
+
+function resetSafe(){
+  document.querySelector('.safe-door').classList.remove('open');
+  document.getElementById('safeLockIcon').classList.replace('fa-lock-open','fa-lock');
+  safeStep = 0;
+}
+
+function confermaReset() { 
+    localStorage.removeItem('rider_db_final_v34'); 
+    location.reload(); 
+}
+
+    function aggiornaTarget() {
+        const adesso = new Date();
+        const chiaveNetto = `${(adesso.getMonth()+1).toString().padStart(2,'0')}/${adesso.getFullYear()}`;
+        db.targets[chiaveNetto] = parseFloat(document.getElementById('targetIn').value) || null;
+        salvaDB();
+    }
+
+    function aggiornaTax() {
+        db.tax = parseFloat(document.getElementById('taxIn').value) || null;
+        salvaDB();
+    }
+
+    function salvaDB() {
+        localStorage.setItem('rider_db_final_v34', JSON.stringify(db));
+        calcola();
+    }
+function calcola() {
+        const n = new Date();
+        const tag = `${(n.getMonth()+1).toString().padStart(2,'0')}/${n.getFullYear()}`;
+        const turniMese = db.turni.filter(t => t.data.endsWith(tag));
+
+        let lordoA = turniMese.reduce((a,b)=>a+b.lordo, 0);
+        let ore = turniMese.reduce((a,b)=>a+b.ore, 0);
+        let km = turniMese.reduce((a,b)=>a+b.km, 0);
+
+        let costoB_Turni = 0;
+        turniMese.forEach(t => {
+            const quantita = t.km * (t.cons / 100);
+            let costo = quantita * (t.prezzo || 0);
+
+            if (t.tipoCarburante === 'miscela' && t.percMiscela && t.prezzoOlio) {
+                costo += (quantita * (t.percMiscela / 100)) * t.prezzoOlio;
+            }
+
+            costoB_Turni += costo;
+        });
+
+        const rifMese = db.rifornimenti.filter(r => r.data.endsWith(tag));
+        let spesaB_Reale = rifMese.reduce((a,b)=>a+b.euro, 0);
+
+        let nettoA = lordoA - (lordoA * (db.tax/100)) - costoB_Turni;
+
+        document.getElementById('lordo').innerText = lordoA.toFixed(2);
+        document.getElementById('netto').innerText = '€' + nettoA.toFixed(2);
+        document.getElementById('ore').innerText = ore.toFixed(1);
+
+        const consumiPerTipo = {};
+        turniMese.forEach(t => {
+            const tipo = t.tipoCarburante || 'benzina';
+            const q = t.km * (t.cons / 100);
+            if (!consumiPerTipo[tipo]) consumiPerTipo[tipo] = 0;
+            consumiPerTipo[tipo] += q;
+        });
+
+        const tipiCarb = Object.keys(consumiPerTipo);
+
+        multiSnapshot.consumo = null;
+        multiSnapshot.efficienza = null;
+
+        if (tipiCarb.length === 1) {
+            const tipo = tipiCarb[0];
+            const unita = getUnitaCarburante(tipo);
+            document.getElementById('cons').innerText = consumiPerTipo[tipo].toFixed(1) + unita;
+            document.getElementById('cons').classList.remove('clickable');
+            document.getElementById('cons').onclick = null;
+
+            const totQ = consumiPerTipo[tipo];
+            document.getElementById('kml').innerText = totQ > 0 ? (km / totQ).toFixed(1) : '0.0';
+            document.getElementById('kml').classList.remove('clickable');
+            document.getElementById('kml').onclick = null;
+        } else if (tipiCarb.length > 1) {
+            document.getElementById('cons').innerText = t('detail');
+            document.getElementById('cons').classList.add('clickable');
+            document.getElementById('cons').onclick = () => apriMulti('consumo');
+            multiSnapshot.consumo = { consumiPerTipo: { ...consumiPerTipo } };
+
+            document.getElementById('kml').innerText = t('detail');
+            document.getElementById('kml').classList.add('clickable');
+            document.getElementById('kml').onclick = () => apriMulti('efficienza');
+            multiSnapshot.efficienza = { consumiPerTipo: { ...consumiPerTipo }, kmTotali: km };
+        }
+
+        document.getElementById('spesaB').innerText = '€' + costoB_Turni.toFixed(2);
+
+        let mediaO = ore > 0 ? (nettoA / ore).toFixed(2) : "0.00";
+        document.getElementById('mediaOraria').innerText = `${t('average')} €${mediaO}/h`;
+
+        let tNetto = db.targets[tag];
+        document.getElementById('targetIn').value = (tNetto !== null && tNetto !== undefined && tNetto !== 0) ? tNetto : "";
+        document.getElementById('taxIn').value = (db.tax !== null && db.tax !== undefined) ? db.tax : "";
+
+        let lordoNecessario = (tNetto + costoB_Turni) / (1 - (db.tax/100));
+        let mancaL = lordoNecessario - lordoA;
+        document.getElementById('mancante').innerText = '€' + (mancaL > 0 ? mancaL.toFixed(2) : "0.00");
+
+        let p = tNetto > 0 ? Math.min((nettoA/tNetto)*100, 100) : 0;
+        document.getElementById('perc').innerText = Math.round(p) + '%';
+        document.getElementById('bar').style.width = p + '%';
+    }
+
+function isDataFutura(d, m, y) {
+    return new Date(y, m - 1, d) > new Date().setHours(23,59,59,999);
+}
+
+function apriM(id) { 
+    const n = new Date(); 
+    let d='', m='', y=''; 
+    const mesiArr = currentLang === 'it' ? mesiIt : mesiEn;
+    
+    for(let i=1; i<=31; i++) 
+        d += `<option value="${i}" ${i==n.getDate()?'selected':''}>${i}</option>`; 
+    
+    mesiArr.forEach((nm,i) => 
+        m += `<option value="${i+1}" ${i==n.getMonth()?'selected':''}>${nm.substring(0,3)}</option>`
+    ); 
+    
+    for(let i=2024; i<=n.getFullYear(); i++) 
+        y += `<option value="${i}" ${i==n.getFullYear()?'selected':''}>${i}</option>`; 
+    
+    let p = id==='modalTurno' ? 'dateT' : (id==='modalBenza' ? 'dateB' : 'dateE'); 
+    document.getElementById(p).innerHTML = `<select id="${p}D">${d}</select><select id="${p}M">${m}</select><select id="${p}Y">${y}</select>`; 
+    
+    if (id === 'modalTurno') {
+        const ultimoCarb = localStorage.getItem('ultimo_carburante_turno') || 'benzina';
+        document.getElementById('tCarburante').value = ultimoCarb;
+        document.getElementById('labelCarburanteTurno').innerText = getIconaCarburante(ultimoCarb) + ' ' + getNomeCarburante(ultimoCarb);
+        document.getElementById('tC').placeholder = ultimoCarb==='metano' ? t('ph_cons_kg') : t('ph_cons_l');
+    }
+
+    if (id === 'modalExtra') {
+        document.getElementById('extraCarburanteInput').value = 'benzina';
+        document.getElementById('labelCarburanteExtra').innerText = '⛽ ' + getNomeCarburante('benzina');
+    }
+
+    document.getElementById(id).style.display='flex'; 
+}
+
+function apriStorico() {
+    const tutti = [
+        ...db.turni.map(t => ({...t, tipo: 'T'})),
+        ...db.rifornimenti.map(r => ({...r, tipo: 'B', tipo_fuel: r.tipo || 'benzina'})),
+        ...db.extraKm.map(e => ({...e, tipo: 'E'}))
+    ].sort((a, b) => b.id - a.id);
+
+    const now = new Date();
+    const meseCorrenteKey = `${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()}`;
+
+    let htmlCorrente = "";
+    let gruppiPassati = {};
+    let ordineMesi = [];
+
+    let nettoTotMese = 0;
+    let oreTotMese = 0;
+    db.turni.forEach(t => {
+        if (t.data.substring(3) === meseCorrenteKey) {
+            let quantita = t.km * (t.cons / 100);
+            let costo = quantita * (t.prezzo || 0);
+            if (t.tipoCarburante === 'miscela') {
+                costo += (quantita * (t.percMiscela / 100)) * t.prezzoOlio;
+            }
+            nettoTotMese += (t.lordo - (t.lordo * (db.tax / 100)) - costo);
+            oreTotMese += t.ore;
+        }
+    });
+let mediaOraMese = oreTotMese > 0 ? nettoTotMese / oreTotMese : 0;
+
+    tutti.forEach(i => {
+        let key = i.data.substring(3);
+        let html = generaHtmlItem(i, mediaOraMese);
+
+        if (key === meseCorrenteKey) {
+            htmlCorrente += html;
+        } else {
+            if (!gruppiPassati[key]) {
+                gruppiPassati[key] = { items: [], lordo: 0, netto: 0, ore: 0 };
+                ordineMesi.push(key);
+            }
+            gruppiPassati[key].items.push(html);
+
+            if (i.tipo === 'T') {
+                let quantita = i.km * (i.cons / 100);
+                let costo = quantita * (i.prezzo || 0);
+                gruppiPassati[key].lordo += i.lordo;
+                gruppiPassati[key].netto += (i.lordo - (i.lordo * (db.tax / 100)) - costo);
+                gruppiPassati[key].ore += i.ore;
+            }
+        }
+    });
+
+    let htmlFinale = "";
+    if (htmlCorrente) {
+        htmlFinale += `<div style="margin-bottom:20px;"><div style="font-size:11px; color:var(--primary); font-weight:bold; padding:5px; border-bottom:1px solid #333; margin-bottom:10px; letter-spacing:1px;">${t('month_current')} (${meseCorrenteKey})</div>${htmlCorrente}</div>`;
+    }
+
+    ordineMesi = [...new Set(ordineMesi)];
+    let storicoPerAnni = {};
+    ordineMesi.forEach(key => {
+        let anno = key.split('/')[1];
+        if (!storicoPerAnni[anno]) storicoPerAnni[anno] = [];
+        storicoPerAnni[anno].push(key);
+    });
+
+    let anniSorted = Object.keys(storicoPerAnni).sort((a, b) => b - a);
+
+    htmlFinale += `<div class="month-group" style="margin-top: 20px; border-color: var(--dim);">
+        <div class="month-header" onclick="toggleMese('ARCHIVIO_ROOT')">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <i class="fas fa-archive" style="color: var(--dim); font-size:14px;"></i>
+                <div class="month-title">${t('archive_root')}</div>
+            </div>
+            <i class="fas fa-chevron-down month-chevron" id="chev_ARCHIVIO_ROOT" style="color:var(--dim);"></i>
+        </div>
+        <div class="month-body" id="body_ARCHIVIO_ROOT" style="padding: 10px 5px;">`;
+
+    if (anniSorted.length > 0) {
+        anniSorted.forEach(anno => {
+            htmlFinale += `<div class="month-group" style="margin-bottom: 8px; border-color: #444;">
+                <div class="month-header" onclick="toggleMese('YEAR_${anno}')" style="background: #2a2a2a;">
+                    <div>
+                        <div class="month-title" style="color: #ccc;">${t('year')} ${anno}</div>
+                    </div>
+                    <div class="month-actions">
+                        <button class="btn-del-month" onclick="event.stopPropagation(); confermaEliminaAnno('${anno}')">
+                            <i class="fas fa-trash"></i> ${t('delete_year')}
+                        </button>
+                        <i class="fas fa-chevron-down month-chevron" id="chev_YEAR_${anno}"></i>
+                    </div>
+                </div>
+                <div class="month-body" id="body_YEAR_${anno}" style="padding: 8px 0;">`;
+
+            const mesiAnno = storicoPerAnni[anno].sort((a, b) => {
+                let [mA, yA] = a.split('/').map(Number);
+                let [mB, yB] = b.split('/').map(Number);
+                return yB - yA || mB - mA;
+            });
+mesiAnno.forEach(k => {
+                const g = gruppiPassati[k];
+                const euroOra = g.ore > 0 ? (g.netto / g.ore).toFixed(2) : '0.00';
+                const nomeMese = getNomeMese(k);
+
+                htmlFinale += `<div class="month-group" style="margin-bottom: 6px;">
+                    <div class="month-header" onclick="toggleMese('${k}')">
+                        <div>
+                            <div class="month-title">${nomeMese}</div>
+                            <div class="month-summary">€${g.netto.toFixed(2)} (${g.ore.toFixed(1)}h • €${euroOra}/h)</div>
+                        </div>
+                        <div class="month-actions">
+                            <button class="btn-del-month" onclick="event.stopPropagation(); confermaEliminaMese('${k}')">
+                                <i class="fas fa-trash"></i> ${t('delete_month')}
+                            </button>
+                            <button class="btn-rep-month" onclick="event.stopPropagation(); apriReport('${k}')">
+                                <i class="fas fa-file-pdf"></i> PDF
+                            </button>
+                            <i class="fas fa-chevron-down month-chevron" id="chev_${k}"></i>
+                        </div>
+                    </div>
+                    <div class="month-body" id="body_${k}">
+                        ${g.items.join('')}
+                    </div>
+                </div>`;
+            });
+
+            htmlFinale += `</div></div>`;
+        });
+    }
+
+    htmlFinale += `</div></div>`;
+
+    document.getElementById('listaStorico').innerHTML = htmlFinale;
+    document.getElementById('histView').style.display = 'flex';
+}
+
+function generaHtmlItem(i, mediaOraMese) {
+    let html = `<div class="storico-item">
+        <div class="storico-info">`;
+
+    if (i.tipo === 'T') {
+        let quantita = i.km * (i.cons / 100);
+        let costo = quantita * (i.prezzo || 0);
+        if (i.tipoCarburante === 'miscela') {
+            costo += (quantita * (i.percMiscela / 100)) * i.prezzoOlio;
+        }
+
+        let netto = i.lordo - (i.lordo * (db.tax / 100)) - costo;
+        let euroOra = i.ore > 0 ? (netto / i.ore).toFixed(2) : '0.00';
+
+        let colore = '#bbb';
+        if (mediaOraMese > 0 && i.ore > 0) {
+            const rapporto = (netto / i.ore) / mediaOraMese;
+            if (rapporto >= 1.15) colore = '#4ade80';
+            else if (rapporto <= 0.85) colore = '#ff6b6b';
+        }
+
+        const unitaC = getUnitaCarburante(i.tipoCarburante);
+        const iconaC = getIconaCarburante(i.tipoCarburante);
+
+        html += `<div class="tipo-label" style="color:var(--primary);">
+            <i class="fas fa-plus-circle"></i> TURNO • ${i.mezzo.toUpperCase()}
+        </div>
+        <div class="storico-date-row">
+            <span>${i.data.substring(0, 5)}</span>
+            <span class="storico-hour">${i.ora || ''}</span>
+        </div>
+        <div class="storico-main" style="color:${colore};">€${netto.toFixed(2)} • ${euroOra}/h</div>
+        <div class="storico-sub">
+            €${i.lordo.toFixed(2)} / ${i.ore.toFixed(1)}h / ${i.km}km / ${i.cons.toFixed(1)}${unitaC} ${iconaC}
+        </div>`;
+} else if (i.tipo === 'B') {
+        const unitaC = getUnitaCarburante(i.tipo_fuel);
+        const iconaC = getIconaCarburante(i.tipo_fuel);
+        const litri = i.euro / i.prezzo;
+
+        html += `<div class="tipo-label" style="color:var(--orange);">
+            <i class="fas fa-gas-pump"></i> ${iconaC} ${getNomeCarburante(i.tipo_fuel).toUpperCase()}
+        </div>
+        <div class="storico-date-row">
+            <span>${i.data.substring(0, 5)}</span>
+        </div>
+        <div class="storico-main">€${i.euro.toFixed(2)}</div>
+        <div class="storico-sub">${litri.toFixed(1)}${unitaC} • ${i.prezzo.toFixed(3)}€/${unitaC}</div>`;
+    } else if (i.tipo === 'E') {
+        const unitaC = getUnitaCarburante(i.carburante);
+        const iconaC = getIconaCarburante(i.carburante);
+
+        html += `<div class="tipo-label" style="color:var(--accent);">
+            <i class="fas fa-road"></i> ${t('extra_km')} ${iconaC}
+        </div>
+        <div class="storico-date-row">
+            <span>${i.data.substring(0, 5)}</span>
+        </div>
+        <div class="storico-main">${i.km}km • €${i.importo.toFixed(2)}</div>
+        <div class="storico-sub">${i.media.toFixed(1)}${unitaC} • ${i.desc || ''}</div>`;
+    }
+
+    html += `</div>
+        <div onclick="elimina('${i.tipo === 'T' ? 'turni' : (i.tipo === 'B' ? 'rifornimenti' : 'extraKm')}', ${i.id})" style="padding:10px; cursor:pointer;">
+            <i class="fas fa-trash" style="color:var(--accent); font-size:18px;"></i>
+        </div>
+    </div>`;
+
+    return html;
+}
+
+function toggleMese(id) {
+    const body = document.getElementById(`body_${id}`);
+    const chevron = document.getElementById(`chev_${id}`);
+    
+    if (body.classList.contains('open')) {
+        body.classList.remove('open');
+        chevron.style.transform = 'rotate(0deg)';
+    } else {
+        body.classList.add('open');
+        chevron.style.transform = 'rotate(180deg)';
+    }
+}
+
+function getNomeMese(key) {
+    const [m, y] = key.split('/');
+    const mesiArr = currentLang === 'it' ? mesiIt : mesiEn;
+    return mesiArr[parseInt(m) - 1] + ' ' + y;
+}
+
+function confermaEliminaMese(key) {
+    meseDaEliminare = key;
+    catElimina = 'MESE';
+    const nomeMese = getNomeMese(key);
+    document.querySelector('#modalElimina p').innerText = t('delete_month_msg').replace('{month}', nomeMese);
+    document.getElementById('modalElimina').style.display = 'flex';
+}
+
+function eseguiEliminazioneMese() {
+    if (meseDaEliminare) {
+        db.turni = db.turni.filter(t => !t.data.endsWith(meseDaEliminare));
+        db.rifornimenti = db.rifornimenti.filter(r => !r.data.endsWith(meseDaEliminare));
+        db.extraKm = db.extraKm.filter(e => !e.data.endsWith(meseDaEliminare));
+        
+        salvaDB();
+        apriStorico();
+        chiudiModali();
+    }
+}
+function apriMulti(tipo) {
+    const snap = multiSnapshot[tipo];
+    if (!snap) return;
+
+    let html = '';
+    let title = tipo === 'consumo' ? t('consumption') : t('efficiency');
+
+    Object.keys(snap.consumiPerTipo).forEach(tipoC => {
+        const unita = getUnitaCarburante(tipoC);
+        const val = tipo === 'consumo' 
+            ? snap.consumiPerTipo[tipoC].toFixed(2) + unita 
+            : (snap.consumiPerTipo[tipoC] > 0 ? (snap.kmTotali / snap.consumiPerTipo[tipoC]).toFixed(1) : '0.0') + ' km/' + unita;
+        
+        html += `<div style="margin-bottom:8px;">${getIconaCarburante(tipoC)} ${getNomeCarburante(tipoC)}: <strong>${val}</strong></div>`;
+    });
+
+    document.getElementById('multiTitle').innerText = title;
+    document.getElementById('multiBody').innerHTML = html;
+    document.getElementById('modalMulti').style.display = 'flex';
+}
+
+function apriReport(meseKey) {
+    reportMeseKey = meseKey;
+    const tag = meseKey || `${(new Date().getMonth()+1).toString().padStart(2,'0')}/${new Date().getFullYear()}`;
+    
+    document.getElementById('reportMeseLabel').innerText = getNomeMese(tag);
+
+    const turniMese = db.turni.filter(t => t.data.endsWith(tag)).sort((a, b) => a.id - b.id);
+    const rifMese = db.rifornimenti.filter(r => r.data.endsWith(tag)).sort((a, b) => a.id - b.id);
+
+    let htmlTurni = '';
+    let lordoTot = 0;
+    let spesaBTot = 0;
+    let tassazioneTot = 0;
+
+    turniMese.forEach(t => {
+        const q = t.km * (t.cons / 100);
+        let costoB = q * (t.prezzo || 0);
+        if (t.tipoCarburante === 'miscela' && t.percMiscela && t.prezzoOlio) {
+            costoB += (q * (t.percMiscela / 100)) * t.prezzoOlio;
+        }
+
+        const unitaC = getUnitaCarburante(t.tipoCarburante);
+        const iconaC = getIconaCarburante(t.tipoCarburante);
+        const nomeC = getNomeCarburante(t.tipoCarburante);
+
+        const netto = t.lordo - (t.lordo * (db.tax / 100)) - costoB;
+
+        lordoTot += t.lordo;
+        spesaBTot += costoB;
+        tassazioneTot += (t.lordo * (db.tax / 100));
+
+        htmlTurni += `<tr>
+            <td>${t.data}</td>
+            <td>€${t.lordo.toFixed(2)}</td>
+            <td>€${netto.toFixed(2)}</td>
+            <td>${t.ore.toFixed(1)}</td>
+            <td>${t.km}</td>
+            <td>${t.cons.toFixed(1)}</td>
+            <td class="tipo-abbrev-mi">${iconaC}</td>
+            <td>${q.toFixed(1)}${unitaC}</td>
+        </tr>`;
+    });
+
+    document.getElementById('repTurniBody').innerHTML = htmlTurni || '<tr><td colspan="8">—</td></tr>';
+
+    let htmlBenza = '';
+    rifMese.forEach(r => {
+        const unitaC = getUnitaCarburante(r.tipo);
+        const iconaC = getIconaCarburante(r.tipo);
+        const nomeC = getNomeCarburante(r.tipo);
+        const litri = r.euro / r.prezzo;
+
+        htmlBenza += `<tr>
+            <td>${r.data}</td>
+            <td>${iconaC} ${nomeC}</td>
+            <td>€${r.euro.toFixed(2)}</td>
+            <td>${r.prezzo.toFixed(3)}€/${unitaC}</td>
+            <td>${litri.toFixed(1)}${unitaC}</td>
+        </tr>`;
+    });
+    document.getElementById('repBenzaBody').innerHTML = htmlBenza || '<tr><td colspan="5">—</td></tr>';
+
+    const periodi = calcolaPeriodiConsumo(turniMese, db.tax);
+    let htmlEff = '';
+    periodi.forEach(p => {
+        htmlEff += `<tr>
+            <td>${p.periodo}</td>
+            <td>${p.count}</td>
+            <td>${p.km}</td>
+            <td>${p.consumoMedio.toFixed(1)}</td>
+            <td>€${p.costoB.toFixed(2)}</td>
+            <td>€${p.netto.toFixed(2)}</td>
+            <td>€${p.euroOra.toFixed(2)}</td>
+        </tr>`;
+    });
+
+    document.getElementById('repEfficienzaBody').innerHTML = htmlEff || '<tr><td colspan="7">—</td></tr>';
+
+    const nettoTot = lordoTot - tassazioneTot - spesaBTot;
+
+    document.getElementById('repLordo').innerText = '€' + lordoTot.toFixed(2);
+    document.getElementById('repSpesaB').innerText = '€' + spesaBTot.toFixed(2);
+    document.getElementById('repTassazione').innerText = '€' + tassazioneTot.toFixed(2);
+    document.getElementById('repNetto').innerText = '€' + nettoTot.toFixed(2);
+
+    document.getElementById('reportView').style.display = 'flex';
+}
+
+function calcolaPeriodiConsumo(turni, tax) {
+    const gruppi = {};
+    turni.forEach(t => {
+        const settimana = Math.ceil(parseInt(t.data.substring(0,2)) / 7);
+        const chiave = `S${settimana}`;
+        if (!gruppi[chiave]) gruppi[chiave] = [];
+        gruppi[chiave].push(t);
+    });
+
+    return Object.keys(gruppi).sort().map(k => {
+        const arr = gruppi[k];
+        const primo = Math.min(...arr.map(t => parseInt(t.data.substring(0,2))));
+        const ultimo = Math.max(...arr.map(t => parseInt(t.data.substring(0,2))));
+        
+        let totL = 0, totO = 0, totK = 0, totLitri = 0, totCostoB = 0;
+
+        arr.forEach(t => {
+            const q = t.km * (t.cons / 100);
+            let c = q * (t.prezzo || 0);
+            if (t.tipoCarburante === 'miscela' && t.percMiscela && t.prezzoOlio) {
+                c += (q * (t.percMiscela / 100)) * t.prezzoOlio;
+            }
+
+            totL += t.lordo;
+            totO += t.ore;
+            totK += t.km;
+            totLitri += q;
+            totCostoB += c;
+        });
+
+        const netto = totL - (totL * (tax / 100)) - totCostoB;
+
+        return {
+            periodo: `${primo}->${ultimo}`,
+            count: arr.length,
+            lordo: totL,
+            ore: totO,
+            km: totK,
+            litri: totLitri,
+            costoB: totCostoB,
+            netto: netto,
+            euroOra: totO ? netto / totO : 0,
+            consumoMedio: totLitri ? totK / totLitri : 0
+        };
+    });
+}
+function apriResaView(){ 
+    document.getElementById('reportView').style.display = 'none'; 
+    document.getElementById('resaView').style.display = 'block'; 
+    disegnaGraficoResa(); 
+}
+
+function chiudiResaView(){ 
+    document.getElementById('resaView').style.display = 'none'; 
+    document.getElementById('reportView').style.display = 'flex'; 
+}
+
+function disegnaGraficoResa(){
+    const tag = reportMeseKey || `${(new Date().getMonth()+1).toString().padStart(2,'0')}/${new Date().getFullYear()}`;
+    const dati = db.turni.filter(t => t.data.endsWith(tag)).sort((a,b) => a.id - b.id);
+
+    if(!dati.length){
+        alert(t('no_data'));
+        chiudiResaView();
+        return;
+    }
+
+    const labels = dati.map(t => t.data.substring(0,5));
+
+    const valsOra = dati.map(t => {
+        if(t.ore <= 0) return 0;
+        const q = t.km * (t.cons / 100);
+        let costoB = q * (t.prezzo || 0);
+        if(t.tipoCarburante === 'miscela' && t.percMiscela && t.prezzoOlio){
+            costoB += (q * (t.percMiscela / 100)) * t.prezzoOlio;
+        }
+        const netto = t.lordo - (t.lordo * (db.tax / 100)) - costoB;
+        return netto / t.ore;
+    });
+
+    const valsKm = dati.map(t => {
+        if(t.km <= 0) return 0;
+        const q = t.km * (t.cons / 100);
+        let costoB = q * (t.prezzo || 0);
+        if(t.tipoCarburante === 'miscela' && t.percMiscela && t.prezzoOlio){
+            costoB += (q * (t.percMiscela / 100)) * t.prezzoOlio;
+        }
+        const netto = t.lordo - (t.lordo * (db.tax / 100)) - costoB;
+        return netto / t.km;
+    });
+
+    const ctxO = document.getElementById('chartOra').getContext('2d');
+    const ctxK = document.getElementById('chartKm').getContext('2d');
+
+    if(window.myChartOra) window.myChartOra.destroy();
+    if(window.myChartKm) window.myChartKm.destroy();
+
+    window.myChartOra = new Chart(ctxO, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: t('chart_eur_h'),
+                data: valsOra,
+                borderColor: '#00CCBC',
+                backgroundColor: 'rgba(0,204,188,0.1)',
+                tension: 0.3,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: true } }
+        }
+    });
+    window.myChartKm = new Chart(ctxK, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: t('chart_eur_km'),
+                data: valsKm,
+                borderColor: '#ff4d4d',
+                backgroundColor: 'rgba(255,77,77,0.1)',
+                tension: 0.3,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: true } }
+        }
+    });
+}
+
+function selezionaCarburante(tipo, testo) {
+    document.getElementById('bTipo').value = tipo;
+    document.getElementById('labelCarburante').innerText = testo;
+    document.getElementById('bP').placeholder = tipo === 'metano' ? '€/kg' : '€/L';
+    document.getElementById('campiMiscela').style.display = tipo === 'miscela' ? 'block' : 'none';
+    document.getElementById('modalSelectCarburante').style.display = 'none';
+}
+
+function formattaPrezzo(input) {
+    let valore = input.value.replace(/[^\d]/g, '');
+    if (valore.length > 1) {
+        input.value = valore.substring(0, 1) + '.' + valore.substring(1, 4);
+    } else {
+        input.value = valore;
+    }
+}
+
+function getUnitaCarburante(tipo) {
+    return tipo === 'metano' ? 'kg' : 'L';
+}
+
+function getNomeCarburante(tipo) {
+    const nomi = {
+        benzina: currentLang === 'it' ? 'Benzina' : 'Gasoline',
+        diesel: currentLang === 'it' ? 'Gasolio' : 'Diesel',
+        gpl: 'GPL',
+        metano: currentLang === 'it' ? 'Metano' : 'CNG',
+        miscela: currentLang === 'it' ? 'Miscela' : 'Mix'
+    };
+    return nomi[tipo] || tipo;
+}
+
+function getIconaCarburante(tipo) {
+    const icone = {
+        benzina: '⛽',
+        diesel: '🛢️',
+        gpl: '🔵',
+        metano: '💨',
+        miscela: '🔀'
+    };
+    return icone[tipo] || '⛽';
+}
+
+function selezionaMezzo(valore, testo) {
+    document.getElementById('tMezzo').value = valore;
+    document.getElementById('labelMezzo').innerText = testo;
+    document.getElementById('tC').style.display = valore === 'bici' ? 'none' : 'block';
+    document.getElementById('modalSelectMezzo').style.display = 'none';
+}
+
+function selezionaCarburanteTurno(tipo, testo) {
+    document.getElementById('tCarburante').value = tipo;
+    document.getElementById('labelCarburanteTurno').innerText = testo;
+    document.getElementById('tC').placeholder = tipo === 'metano' ? t('ph_cons_kg') : t('ph_cons_l');
+    localStorage.setItem('ultimo_carburante_turno', tipo);
+    document.getElementById('modalSelectCarburanteTurno').style.display = 'none';
+}
+
+function selezionaCarburanteExtra(tipo, testo) {
+    document.getElementById('extraCarburanteInput').value = tipo;
+    document.getElementById('labelCarburanteExtra').innerText = testo;
+    document.getElementById('modalSelectCarburanteExtra').style.display = 'none';
+}
+function mostraModalPrezzoIniziale(tipoCarburante) {
+    tipoCarburantePrezzoIniziale = tipoCarburante;
+    document.getElementById('titlePrezzoIniziale').innerText = `⛽ ${getNomeCarburante(tipoCarburante).toUpperCase()}`;
+    document.getElementById('campiOlioInizio').style.display = tipoCarburante === 'miscela' ? 'block' : 'none';
+    document.getElementById('modalInizio').style.display = 'flex';
+}
+
+function confermaPrezzoIniziale() {
+    const prezzo = parseFloat(document.getElementById('pIniziale').value.replace(',', '.'));
+    if (!prezzo) return;
+
+    const rif = {
+        id: Date.now() - 1000,
+        data: new Date().toLocaleDateString('it-IT'),
+        tipo: tipoCarburantePrezzoIniziale,
+        euro: 0,
+        prezzo: prezzo
+    };
+
+    if (tipoCarburantePrezzoIniziale === 'miscela') {
+        rif.percMiscela = parseFloat(document.getElementById('pPercMiscelaInizio').value);
+        rif.prezzoOlio = parseFloat(document.getElementById('pOlioInizio').value.replace(',', '.'));
+    }
+
+    db.rifornimenti.push(rif);
+    document.getElementById('modalInizio').style.display = 'none';
+    effettuaSalvataggioTurno(prezzo, rif);
+}
+
+function salvaTurno() {
+    if (isDataFutura(document.getElementById('dateTD').value, document.getElementById('dateTM').value, document.getElementById('dateTY').value)) {
+        alert(t('alert_future'));
+        return;
+    }
+
+    const tipoCarb = document.getElementById('tCarburante').value;
+    const rif = db.rifornimenti.filter(r => r.tipo === tipoCarb).sort((a, b) => b.id - a.id)[0];
+
+    if (!rif) {
+        mostraModalPrezzoIniziale(tipoCarb);
+        return;
+    }
+
+    effettuaSalvataggioTurno(rif.prezzo, rif);
+}
+
+function effettuaSalvataggioTurno(prezzo, rif) {
+    const dataCompleta = `${document.getElementById('dateTD').value.padStart(2,'0')}/${document.getElementById('dateTM').value.padStart(2,'0')}/${document.getElementById('dateTY').value}`;
+
+    const obj = {
+        id: Date.now(),
+        data: dataCompleta,
+        ora: new Date().toLocaleTimeString().substring(0, 5),
+        mezzo: document.getElementById('tMezzo').value,
+        lordo: parseFloat(document.getElementById('tL').value) || 0,
+        ore: parseFloat(document.getElementById('tO').value) || 0,
+        km: parseFloat(document.getElementById('tK').value) || 0,
+        cons: parseFloat(document.getElementById('tC').value) || 0,
+        prezzo: prezzo,
+        tipoCarburante: document.getElementById('tCarburante').value
+    };
+
+    if (obj.tipoCarburante === 'miscela' && rif) {
+        obj.percMiscela = rif.percMiscela;
+        obj.prezzoOlio = rif.prezzoOlio;
+    }
+
+    db.turni.push(obj);
+    salvaDB();
+    chiudiModali();
+    mostraModalBackup();
+}
+
+function salvaBenza() {
+    const euro = parseFloat(document.getElementById('bE').value) || 0;
+    let prezzo = parseFloat(document.getElementById('bP').value.replace(',', '.')) || 0;
+
+    if (euro > 0 && prezzo <= 0) {
+        prezzo = parseFloat(prompt(t('insert_last_price'))?.replace(',', '.') || 0);
+    }
+
+    if (euro <= 0 || prezzo <= 0) {
+        alert(t('alert_missing'));
+        return;
+    }
+
+    const obj = {
+        id: Date.now(),
+        data: `${document.getElementById('dateBD').value.padStart(2,'0')}/${document.getElementById('dateBM').value.padStart(2,'0')}/${document.getElementById('dateBY').value}`,
+        tipo: document.getElementById('bTipo').value,
+        euro: euro,
+        prezzo: prezzo
+    };
+
+    if (obj.tipo === 'miscela') {
+        obj.percMiscela = parseFloat(document.getElementById('bPercMiscela').value);
+        obj.prezzoOlio = parseFloat(document.getElementById('bPrezzoOlio').value.replace(',', '.'));
+        if (!obj.percMiscela || !obj.prezzoOlio) {
+            alert(t('alert_mix'));
+            return;
+        }
+    }
+    db.rifornimenti.push(obj);
+    salvaDB();
+    chiudiModali();
+    mostraModalBackup();
+}
+
+function salvaExtraKm() {
+    const km = parseFloat(document.getElementById('extraKmInput').value);
+    if (km <= 0) return;
+
+    const carb = document.getElementById('extraCarburanteInput').value;
+    const rif = db.rifornimenti.filter(r => r.tipo === carb).sort((a, b) => b.id - a.id)[0];
+
+    if (!rif) {
+        alert(t('alert_no_refuel'));
+        return;
+    }
+
+    const media = parseFloat(document.getElementById('extraMediaInput').value);
+    const litri = (km * media) / 100;
+
+    db.extraKm.push({
+        id: Date.now(),
+        data: `${document.getElementById('dateED').value.padStart(2,'0')}/${document.getElementById('dateEM').value.padStart(2,'0')}/${document.getElementById('dateEY').value}`,
+        km: km,
+        desc: document.getElementById('extraDescInput').value,
+        media: media,
+        carburante: carb,
+        importo: litri * rif.prezzo
+    });
+
+    salvaDB();
+    chiudiModali();
+    mostraModalBackup();
+}
+
+function mostraAlertGrafico(titolo, messaggio) {
+    alert(`${titolo}\n\n${messaggio}`);
+}
+
+function chiudiModali() {
+    document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+}
+
+function resetModaleElimina() {
+    catElimina = '';
+    idElimina = null;
+    meseDaEliminare = null;
+    annoDaEliminare = null;
+    document.getElementById('modalElimina').style.display = 'none';
+}
+
+function elimina(categoria, id) {
+    catElimina = categoria;
+    idElimina = id;
+    document.getElementById('modalElimina').style.display = 'flex';
+}
+
+document.getElementById('btnConfermaElimina').onclick = function() {
+    if (catElimina === 'MESE') {
+        eseguiEliminazioneMese();
+    } else if (catElimina === 'ANNO') {
+        eseguiEliminazioneAnno();
+    } else {
+        db[catElimina] = db[catElimina].filter(x => x.id !== idElimina);
+        salvaDB();
+        apriStorico();
+        resetModaleElimina();
+    }
+};
+
+function confermaEliminaAnno(anno) {
+    annoDaEliminare = anno;
+    catElimina = 'ANNO';
+    document.querySelector('#modalElimina p').innerText = `${t('delete_year')} ${anno}?`;
+    document.getElementById('modalElimina').style.display = 'flex';
+}
+
+function eseguiEliminazioneAnno() {
+    if (annoDaEliminare) {
+        db.turni = db.turni.filter(t => !t.data.endsWith(annoDaEliminare));
+        db.rifornimenti = db.rifornimenti.filter(r => !r.data.endsWith(annoDaEliminare));
+        db.extraKm = db.extraKm.filter(e => !e.data.endsWith(annoDaEliminare));
+        
+        salvaDB();
+        apriStorico();
+        resetModaleElimina();
+    }
+}
+function mostraModalBackup() {
+    document.getElementById('modalBackupExport').style.display = 'flex';
+}
+
+function salvaBackup() {
+    const dataObj = {
+        timestamp: Date.now(),
+        db: db
+    };
+    const blob = new Blob([JSON.stringify(dataObj)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `backup_${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+}
+
+function accettaBackup() {
+    salvaBackup();
+    document.getElementById('modalBackupExport').style.display = 'none';
+}
+
+function rifiutaBackup() {
+    document.getElementById('modalBackupExport').style.display = 'none';
+}
+
+document.getElementById("fileBackup").addEventListener("change", function (e) {
+    const reader = new FileReader();
+    reader.onload = function (ev) {
+        try {
+            db = JSON.parse(ev.target.result).db;
+            salvaDB();
+            location.reload();
+        } catch (err) {
+            alert("Errore nel file di backup");
+        }
+    };
+    reader.readAsText(e.target.files[0]);
+});
+
+function verificaPassword() {
+    const inputPassword = document.getElementById('passwordInput').value;
+    const passwordCorretta = 'riderpro2025';
+    
+    if (inputPassword === passwordCorretta) {
+        document.getElementById('passwordScreen').style.display = 'none';
+        document.getElementById('mainContainer').style.display = 'block';
+        localStorage.setItem('app_authenticated', 'true');
+    } else {
+        document.getElementById('passwordError').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+    }
+}
+
+window.onload = function() {
+
+    const isAuthenticated = localStorage.getItem('app_authenticated');
+    if (isAuthenticated === 'true') {
+        document.getElementById('passwordScreen').style.display = 'none';
+        document.getElementById('mainContainer').style.display = 'block';
+    }
+
+    aggiornaDBConTipoCarburante();
+
+    setTimeout(() => {
+        updateInterface();
+    }, 200);
+
+    setInterval(() => {
+        const n = new Date();
+        document.getElementById('liveClock').innerText = `${n.getDate().toString().padStart(2,'0')}/${(n.getMonth()+1).toString().padStart(2,'0')}/${n.getFullYear().toString().substring(2)} ${n.toLocaleTimeString()}`;
+    }, 1000);
+
+    const ultimoAvviso = localStorage.getItem('ultimo_avviso_fine_mese');
+    const meseCorrente = `${new Date().getMonth() + 1}/${new Date().getFullYear()}`;
+    
+    if (new Date().getDate() === 1 && ultimoAvviso !== meseCorrente) {
+        setTimeout(() => {
+            document.getElementById('modalFineMese').style.display = 'flex';
+        }, 2000);
+        localStorage.setItem('ultimo_avviso_fine_mese', meseCorrente);
+    }
+
+    const inputs = document.querySelectorAll('.modal input');
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            const content = input.closest('.modal-content');
+            if (content) content.style.transform = 'translateY(-170px)';
+        });
+        input.addEventListener('blur', () => {
+            const content = input.closest('.modal-content');
+            if (content) content.style.transform = 'translateY(0)';
+        });
+    });
+};
+function stampaDirettaDaAlert() {
+    chiudiModali();
+    apriReport();
+    window.print();
+}
+    </script>
+</body>
+</html>
