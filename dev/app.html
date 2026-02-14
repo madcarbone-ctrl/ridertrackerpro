@@ -1202,17 +1202,18 @@ function aggiornaDBConTipoCarburante() {
 // GLOBAL USER SETTINGS (WORLD READY)
 // =============================
 
-let userSettings = JSON.parse(localStorage.getItem('user_settings')) || { 
-function salvaUserSettings(){
-    localStorage.setItem('user_settings', JSON.stringify(userSettings));
-    updateInterface();
-}
+let userSettings = JSON.parse(localStorage.getItem('user_settings')) || {
     distance: 'km',          // km | miles
     volume: 'liters',        // liters | gallons_us | gallons_uk
     mass: 'kg',              // kg | lbs
     currency: 'EUR',         // EUR | USD | GBP
     consumption: 'l_100km'   // l_100km | mpg_us | mpg_uk | km_l
 };
+
+function salvaUserSettings(){
+    localStorage.setItem('user_settings', JSON.stringify(userSettings));
+    updateInterface();
+}
 
 // =============================
 // OFFICIAL CONVERSION CONSTANTS
