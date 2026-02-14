@@ -1196,7 +1196,7 @@ function aggiornaDBConTipoCarburante() {
     if (aggiornato) {
         localStorage.setItem('rider_db_final_v34', JSON.stringify(db));
     }
-}
+
     let db = JSON.parse(localStorage.getItem('rider_db_final_v34')) || { turni: [], rifornimenti: [], extraKm: [], targets: {}, tax: null };
     // =============================
 // GLOBAL USER SETTINGS (WORLD READY)
