@@ -60,6 +60,11 @@
             animation: pulse 2s ease-in-out infinite;
         }
         
+        /* Classe per nascondere il logo solo su FB */
+        .logo-container.hide-on-fb {
+            display: none !important;
+        }
+        
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
@@ -305,20 +310,34 @@
     </div>
 
     <script>
-        // Controlla se l'utente è dentro Facebook o Instagram
+
+// Controlla se l'utente è dentro Facebook o Instagram
 const ua = navigator.userAgent || navigator.vendor || window.opera;
 const isSocial = /FBAN|FBAV|Instagram/.test(ua);
 
 if (isSocial) {
-    // Mostra il messaggio di avviso
-    document.getElementById('fb-notice').style.display = 'block';
+    // 1. Mostra il messaggio di avviso in alto (se lo hai aggiunto nell'HTML)
+    const fbNotice = document.getElementById('fb-notice');
+    if (fbNotice) {
+        fbNotice.style.display = 'block';
+    }
     
-    // Cambia il comportamento del tasto Installa per avvisare l'utente
-    document.getElementById('installButton').addEventListener('click', (e) => {
-        e.stopImmediatePropagation(); // Blocca l'installazione normale
-        alert("Facebook non permette l'installazione diretta. Clicca i tre puntini in alto e scegli 'Apri nel browser'.");
-    }, true);
+    // 2. Nasconde il logo per recuperare spazio su Facebook
+    const logo = document.querySelector('.logo-container');
+    if (logo) {
+        logo.classList.add('hide-on-fb');
+    }
+    
+    // 3. Blocca il tasto installa con un avviso specifico
+    const btn = document.getElementById('installButton');
+    if (btn) {
+        btn.addEventListener('click', (e) => {
+            e.stopImmediatePropagation();
+            alert("Facebook non permette l'installazione. Clicca i tre puntini (⋮) in alto e seleziona 'Apri nel browser'.");
+        }, true);
+    }
 }
+        
         let deferredPrompt;
         const installScreen = document.getElementById('pwaInstallScreen');
         const installButton = document.getElementById('installButton');
