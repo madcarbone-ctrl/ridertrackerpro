@@ -9,33 +9,35 @@
     <meta name="theme-color" content="#000000">
     <title>RIDER TRACKER PRO</title>
 
-<link rel="icon" href="./logo-app.jpg" type="image/jpeg">
-<link rel="apple-touch-icon" href="./logo-app.jpg">
+    <link rel="icon" href="./logo-app.jpg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="./logo-app.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="manifest" href="./manifest.json">
     <link rel="apple-touch-icon" href="./logo-app.jpg">
+    
     <style>
         * { 
             margin: 0; 
             padding: 0; 
             box-sizing: border-box; 
         }
+        
         body { 
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #000;
-    color: #fff;
-    min-height: 100vh;
-    width: 100%;
-    overflow-y: auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            width: 100%;
+            overflow-y: auto;
         }
         
-#pwaInstallScreen {
-    min-height: 100vh;
-    width: 100%;
-    background: #000;
-    padding: 20px 25px;
-    overflow: visible;
-}
+        #pwaInstallScreen {
+            min-height: 100vh;
+            width: 100%;
+            background: #000;
+            padding: 10px 25px; /* Padding ridotto per guadagnare spazio in alto */
+            overflow: visible;
+        }
         
         .install-container {
             max-width: 450px;
@@ -44,14 +46,8 @@
         }
         
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .logo-container {
@@ -66,12 +62,8 @@
         }
         
         @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
         
         .logo-container img {
@@ -107,7 +99,7 @@
             font-weight: 700;
         }
         
-#installButton {
+        #installButton {
             width: 100%;
             padding: 16px 30px;
             background: linear-gradient(135deg, #00CCBC 0%, #00a89e 100%);
@@ -126,7 +118,7 @@
             justify-content: center;
             gap: 12px;
             margin-bottom: 20px;
-}
+        }
         
         #installButton:active {
             transform: scale(0.97);
@@ -221,42 +213,42 @@
         
         /* Media query per schermi piccoli */
         @media (max-height: 700px) {
-            #pwaInstallScreen {
-                padding: 30px 20px;
-            }
-            
-            .logo-container {
-                margin-bottom: 20px;
-            }
-            
-            .logo-container img {
-                max-width: 180px;
-            }
-            
-            .install-text h1 {
-                font-size: 20px;
-            }
-            
-            .install-text {
-                margin-bottom: 20px;
-            }
-            
-            .features-list {
-                margin-bottom: 20px;
-            }
-            
-            .feature-item {
-                padding: 10px;
-                margin-bottom: 10px;
-            }
+            #pwaInstallScreen { padding: 20px 20px; }
+            .logo-container img { max-width: 180px; }
+            .install-text h1 { font-size: 20px; }
+        }
+
+        /* --- STILI SPECIFICI PER FACEBOOK (COMPATTAZIONE) --- */
+        body.is-social .install-text h1 {
+            font-size: 18px !important; /* Titolo più piccolo */
+            margin-top: -10px !important; /* Tira su il titolo verso l'avviso */
+            margin-bottom: 5px !important;
+        }
+        
+        body.is-social #installButton {
+            padding: 10px 20px !important; /* Bottone più basso/compatto */
+            font-size: 15px !important;
+            margin-bottom: 15px !important;
+            min-height: 44px; /* Altezza minima cliccabile */
+        }
+
+        body.is-social .install-text p {
+            font-size: 13px !important;
+            margin-bottom: 5px !important;
+        }
+        
+        body.is-social .feature-item {
+            padding: 8px !important;
+            margin-bottom: 8px !important;
         }
     </style>
 </head>
 <body>
-    <div id="fb-notice" style="display: none; background: rgba(0, 204, 188, 0.2); border: 2px solid #00CCBC; margin: 15px; padding: 15px; border-radius: 12px; text-align: center; font-size: 14px; color: #fff;">
-    ⚠️ <strong>Browser limitato</strong><br>
-    Per installare l'app: clicca sui <strong>tre puntini (⋮)</strong> in alto e seleziona <strong>"Apri nel browser"</strong>.
-</div>
+    <div id="fb-notice" style="display: none; background: rgba(0, 204, 188, 0.2); border: 2px solid #00CCBC; margin: 10px 15px 5px 15px; padding: 12px; border-radius: 12px; text-align: center; font-size: 13px; color: #fff;">
+        ⚠️ <strong>Browser limitato</strong><br>
+        Per installare l'app: clicca sui <strong>tre puntini (⋮)</strong> in alto e seleziona <strong>"Apri nel browser"</strong>.
+    </div>
+
     <div id="pwaInstallScreen">
         <div class="install-container">
             <div class="logo-container">
@@ -310,39 +302,66 @@
     </div>
 
     <script>
-
-// Controlla se l'utente è dentro Facebook o Instagram
-const ua = navigator.userAgent || navigator.vendor || window.opera;
-const isSocial = /FBAN|FBAV|Instagram/.test(ua);
-
-if (isSocial) {
-    // 1. Mostra il messaggio di avviso in alto (se lo hai aggiunto nell'HTML)
-    const fbNotice = document.getElementById('fb-notice');
-    if (fbNotice) {
-        fbNotice.style.display = 'block';
-    }
-    
-    // 2. Nasconde il logo per recuperare spazio su Facebook
-    const logo = document.querySelector('.logo-container');
-    if (logo) {
-        logo.classList.add('hide-on-fb');
-    }
-    
-    // 3. Blocca il tasto installa con un avviso specifico
-    const btn = document.getElementById('installButton');
-    if (btn) {
-        btn.addEventListener('click', (e) => {
-            e.stopImmediatePropagation();
-            alert("Facebook non permette l'installazione. Clicca i tre puntini (⋮) in alto e seleziona 'Apri nel browser'.");
-        }, true);
-    }
-}
-        
+        // Variabili globali
         let deferredPrompt;
         const installScreen = document.getElementById('pwaInstallScreen');
         const installButton = document.getElementById('installButton');
         const iosInstructions = document.getElementById('iosInstructions');
+        const fbNotice = document.getElementById('fb-notice');
+        const logo = document.querySelector('.logo-container');
+
+        // --- RILEVAMENTO SOCIAL BROWSER (Facebook/Instagram) ---
+        const ua = navigator.userAgent || navigator.vendor || window.opera;
+        const isSocial = /FBAN|FBAV|Instagram/.test(ua);
+
+        if (isSocial) {
+            // 1. Attiva la classe CSS speciale per rimpicciolire tutto
+            document.body.classList.add('is-social');
+            
+            // 2. Mostra l'avviso
+            if (fbNotice) fbNotice.style.display = 'block';
+            
+            // 3. Nasconde il logo per fare spazio
+            if (logo) logo.classList.add('hide-on-fb');
+            
+            // 4. Blocca il click sul pulsante Installa
+            if (installButton) {
+                // Cloniamo il bottone per rimuovere listener precedenti e metterne uno nuovo pulito
+                const newBtn = installButton.cloneNode(true);
+                installButton.parentNode.replaceChild(newBtn, installButton);
+                
+                newBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    alert("Facebook non permette l'installazione. Clicca i tre puntini (⋮) in alto e seleziona 'Apri nel browser'.");
+                });
+            }
+        } else {
+            // --- COMPORTAMENTO NORMALE (Chrome/Safari/ecc) ---
+            
+            // Gestione installazione PWA standard
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                installButton.style.display = 'flex';
+            });
+            
+            installButton.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        console.log('App installata con successo');
+                    }
+                    deferredPrompt = null;
+                } else {
+                    // Se non c'è prompt (es. iOS o già installata), mostra istruzioni iOS
+                    iosInstructions.classList.add('show');
+                }
+            });
+        }
         
+        // Verifica se l'app è già installata
         function isAppInstalled() {
             return window.matchMedia('(display-mode: standalone)').matches || 
                    window.navigator.standalone === true;
@@ -352,38 +371,21 @@ if (isSocial) {
             window.location.href = './app.html';
         }
         
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installButton.style.display = 'flex';
-        });
-        
-        installButton.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log('App installata con successo');
-                }
-                deferredPrompt = null;
-            } else {
-                iosInstructions.classList.add('show');
-            }
-        });
-        
         window.addEventListener('appinstalled', () => {
             console.log('PWA installata');
             installScreen.classList.add('hidden');
             window.location.href = './app.html';
         });
         
+        // Rilevamento iOS per mostrare istruzioni automatiche (se non siamo su social)
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        if (isIOS) {
+        if (isIOS && !isSocial) {
             setTimeout(() => {
                 iosInstructions.classList.add('show');
             }, 1000);
         }
         
+        // Registrazione Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./service-worker.js')
