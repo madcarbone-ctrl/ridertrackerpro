@@ -250,6 +250,31 @@
                 margin-bottom: 10px;
             }
         }
+        /* Riduzioni specifiche per Facebook */
+        body.is-social .install-text h1 {
+            font-size: 18px !important; /* Titolo più piccolo */
+            margin-bottom: 5px !important;
+        }
+        
+        body.is-social .install-text p {
+            font-size: 13px !important; /* Sottotitolo più piccolo */
+        }
+
+        body.is-social .feature-item {
+            padding: 8px !important; /* Liste più compatte */
+            margin-bottom: 6px !important;
+        }
+
+        body.is-social #installButton {
+            padding: 12px 20px !important; /* Pulsante più basso */
+            font-size: 15px !important;
+            margin-bottom: 15px !important;
+        }
+
+        body.is-social .install-note {
+            padding: 8px !important; /* Nota rossa più sottile */
+            font-size: 11px !important;
+        }
     </style>
 </head>
 <body>
@@ -337,60 +362,33 @@ if (isSocial) {
         }, true);
     }
 }
+        // Controlla se l'utente è dentro Facebook o Instagram
+const ua = navigator.userAgent || navigator.vendor || window.opera;
+const isSocial = /FBAN|FBAV|Instagram/.test(ua);
+
+if (isSocial) {
+    // Attiva le riduzioni CSS
+    document.body.classList.add('is-social');
+
+    // 1. Mostra il messaggio di avviso in alto
+    const fbNotice = document.getElementById('fb-notice');
+    if (fbNotice) fbNotice.style.display = 'block';
+    
+    // 2. Nasconde il logo per recuperare spazio
+    const logo = document.querySelector('.logo-container');
+    if (logo) logo.classList.add('hide-on-fb');
+    
+    // 3. Blocca il tasto installa con un avviso
+    const btn = document.getElementById('installButton');
+    if (btn) {
+        btn.addEventListener('click', (e) => {
+            e.stopImmediatePropagation();
+            alert("Facebook blocca l'installazione. Clicca i tre puntini (⋮) in alto e seleziona 'Apri nel browser'.");
+        }, true);
+    }
+}
         
-        let deferredPrompt;
-        const installScreen = document.getElementById('pwaInstallScreen');
-        const installButton = document.getElementById('installButton');
-        const iosInstructions = document.getElementById('iosInstructions');
         
-        function isAppInstalled() {
-            return window.matchMedia('(display-mode: standalone)').matches || 
-                   window.navigator.standalone === true;
-        }
-        
-        if (isAppInstalled()) {
-            window.location.href = './app.html';
-        }
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installButton.style.display = 'flex';
-        });
-        
-        installButton.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log('App installata con successo');
-                }
-                deferredPrompt = null;
-            } else {
-                iosInstructions.classList.add('show');
-            }
-        });
-        
-        window.addEventListener('appinstalled', () => {
-            console.log('PWA installata');
-            installScreen.classList.add('hidden');
-            window.location.href = './app.html';
-        });
-        
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        if (isIOS) {
-            setTimeout(() => {
-                iosInstructions.classList.add('show');
-            }, 1000);
-        }
-        
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./service-worker.js')
-                    .then(reg => console.log('Service Worker registrato'))
-                    .catch(err => console.log('Errore Service Worker:', err));
-            });
-        }
     </script>
 </body>
 </html>
